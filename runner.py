@@ -33,11 +33,12 @@ print("testcases in list form", testcases)
 for row in testcases:
     print("source_file_path/table and type", row['source'], row['source_type'])
     print("target_file_path/table", row['target'], row['target_type'])
-    if row['source_type'] == 'csv':
-        source = read_file(path = row['source'], type=row['source_type'], spark=spark)
+    print("source schema path", row['source_schema_path'])
+    if row['source_type'] in ( 'csv', 'json') :
+        source = read_file(path = row['source'], type=row['source_type'],schema_path=row['source_schema_path'] ,spark=spark)
 
-    if row['target_type'] == 'csv':
-        target = read_file(path = row['target'], type=row['target_type'], spark=spark)
+    if row['target_type'] in ( 'csv', 'json'):
+        target = read_file(path = row['target'], type=row['target_type'], schema_path=row['target_schema_path'],spark=spark)
 
     source.show(truncate=False)
     target.show(truncate=False)
