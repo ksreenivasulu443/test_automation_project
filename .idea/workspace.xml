@@ -5,15 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="09255fa2-d8ac-4ef0-9cc1-e50a090296db" name="Changes" comment="Read library">
-      <change afterPath="$PROJECT_DIR$/files/singleline.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/schema_files/contact_info_schema.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/test_automation_project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/test_automation_project.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/Master_Test_Template_copy.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/Complex2.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utility/genereal_lib.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/Master_Test_Template.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/config/Master_Test_Template.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/Contact_info.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/Contact_info.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runner.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utility/read_lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/utility/read_lib.py" afterDir="false" />
     </list>
@@ -43,6 +39,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.genereal_lib.executor": "Run",
     "Python.main.executor": "Run",
     "Python.read_lib.executor": "Run",
     "Python.runner.executor": "Run",
@@ -56,9 +53,32 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\A4952\PycharmProjects\test_automation_project\files" />
+      <recent name="C:\Users\A4952\PycharmProjects\test_automation_project\config" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.runner">
+  <component name="RunManager" selected="Python.genereal_lib">
+    <configuration name="genereal_lib" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="test_automation_project" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/utility" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utility/genereal_lib.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="test_automation_project" />
       <option name="ENV_FILES" value="" />
@@ -149,6 +169,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.genereal_lib" />
         <item itemvalue="Python.runner" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.read_lib" />
@@ -179,7 +200,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725421048349</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Read library">
+      <option name="closed" value="true" />
+      <created>1725507675621</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1725507675621</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

@@ -16,9 +16,9 @@ print(run_test_case.head(10))
 
 run_test_case = spark.createDataFrame(run_test_case)
 
-validation = (run_test_case.groupBy('source', 'source_type',
+validation = (run_test_case.groupBy('source', 'source_type','source_json_multiline',
                                     'source_db_name', 'source_schema_path', 'source_transformation_query_path',
-                                    'target', 'target_type', 'target_db_name', 'target_schema_path',
+                                    'target', 'target_type','target_json_multiline', 'target_db_name', 'target_schema_path',
                                     'target_transformation_query_path',
                                     'key_col_list', 'null_col_list', 'exclude_columns',
                                     'unique_col_list', 'dq_column', 'expected_values', 'min_val', 'max_val').
@@ -35,10 +35,19 @@ for row in testcases:
     print("target_file_path/table", row['target'], row['target_type'])
     print("source schema path", row['source_schema_path'])
     if row['source_type'] in ( 'csv', 'json') :
-        source = read_file(path = row['source'], type=row['source_type'],schema_path=row['source_schema_path'] ,spark=spark)
+        source = read_file(path = row['source'],
+                           type=row['source_type'],
+                           schema_path=row['source_schema_path'] ,
+                           spark = spark,
+                           multiline=row['source_json_multiline'])
 
     if row['target_type'] in ( 'csv', 'json'):
-        target = read_file(path = row['target'], type=row['target_type'], schema_path=row['target_schema_path'],spark=spark)
+        target = read_file(path = row['target'],
+                           type=row['target_type'],
+                           schema_path=row['target_schema_path'],
+                           spark=spark,
+                           multiline=row['target_json_multiline']
+                           )
 
     source.show(truncate=False)
     target.show(truncate=False)
