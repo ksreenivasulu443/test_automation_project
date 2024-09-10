@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="09255fa2-d8ac-4ef0-9cc1-e50a090296db" name="Changes" comment="Read library">
-      <change afterPath="$PROJECT_DIR$/config/Master_Test_Template_copy.xlsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/files/Complex2.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utility/genereal_lib.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/userdata1.avro" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/userdata1.parquet" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/Master_Test_Template.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/config/Master_Test_Template.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runner.py" afterDir="false" />
@@ -208,7 +207,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725507675621</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Read library">
+      <option name="closed" value="true" />
+      <created>1725593565040</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1725593565040</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
