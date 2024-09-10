@@ -20,11 +20,20 @@ def read_file(path, type, schema_path, spark, multiline):
             return df
 
     elif type == 'json':
-        if multiline == True:
-            df = spark.read.option("multiline", True).json(path)
-            df = flatten(df)
-            return df
-        else:
-            df = spark.read.option("multiline", False).json(path)
-            df = flatten(df)
-            return df
+        df = spark.read.option("multiline", multiline).json(path)
+        df = flatten(df)
+        return df
+
+    elif type == 'parquet':
+        df = spark.read.parquet(path)
+        return df
+    elif type == 'avro':
+        df = spark.read.format('avro').load("path")
+        return df
+    elif type == 'text':
+        df = spark.read.format("text").load(path)
+        return df
+    elif type == 'orc':
+        pass
+    elif type == 'dat':
+        pass
