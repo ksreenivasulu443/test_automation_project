@@ -1,21 +1,24 @@
-
 from pyspark.sql import SparkSession
-from pyspark.sql.types import StructType
-import json
-spark = SparkSession.builder.getOrCreate()
 
-#Read the JSON configuration file
-with open(r"C:\Users\A4952\PycharmProjects\test_automation_project\schema_files\contact_info_schema.json", 'r') as schema_file:
-        schema = StructType.fromJson(json.load(schema_file))
 
-print(schema)
 
-df = spark.read.schema(schema).csv(r"C:\Users\A4952\PycharmProjects\test_automation_project\files\Contact_info.csv", header=True )
+snow_jar = r"C:\Users\A4952\PycharmProjects\June_automation_batch1\jars\snowflake-jdbc-3.14.3.jar"
+spark = SparkSession.builder.master("local[1]") \
+                .appName("test") \
+                .config("spark.jars", snow_jar) \
+                .config("spark.driver.extraClassPath", snow_jar) \
+                .config("spark.executor.extraClassPath", snow_jar) \
+                .getOrCreate()
 
-#df = spark.read.csv(r"C:\Users\A4952\PycharmProjects\test_automation_project\files\Contact_info.csv", header=True, inferSchema=True)
+url = 'jdbc:snowflake://epizybn-qo01792.snowflakecomputing.com/?user=KSREENIVASULU443&password=Dharmavaram1@&warehouse=COMPUTE_WH&db=SAMPLEDB&schema=CONTACT_INFO'
 
-df.printSchema()
+df = spark.read \
+                .format("jdbc") \
+                .option("driver", "net.snowflake.client.jdbc.SnowflakeDriver") \
+                .option("url", url) \
+                .option("query", 'select * from CONTACT_INFO_RAW') \
+                .load()
 
-print(df.schema.json())
+df.show()
 
-df.show(truncate=False)
+

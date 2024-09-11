@@ -2,9 +2,17 @@ import pandas as pd
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import collect_set
 
-from utility.read_lib import read_file
+from utility.read_lib import read_file, read_snowflake
 
-spark = SparkSession.builder.getOrCreate()
+snow_jar = r"C:\Users\A4952\PycharmProjects\June_automation_batch1\jars\snowflake-jdbc-3.14.3.jar"
+
+
+spark = SparkSession.builder.master("local[1]") \
+    .appName("test") \
+    .config("spark.jars", snow_jar) \
+    .config("spark.driver.extraClassPath", snow_jar) \
+    .config("spark.executor.extraClassPath", snow_jar) \
+    .getOrCreate()
 
 test_cases = pd.read_excel(r"C:\Users\A4952\PycharmProjects\test_automation_project\config\Master_Test_Template.xlsx")
 print("all test cases")
@@ -33,21 +41,22 @@ print("testcases in list form", testcases)
 for row in testcases:
     print("source_file_path/table and type", row['source'], row['source_type'])
     print("target_file_path/table", row['target'], row['target_type'])
-    print("source schema path", row['source_schema_path'])
-    if row['source_type'] in ( 'csv', 'json','avro', 'parquet') :
-        source = read_file(path = row['source'],
-                           type=row['source_type'],
-                           schema_path=row['source_schema_path'] ,
-                           spark = spark,
-                           multiline=row['source_json_multiline'])
+    print("source db name", row['source_db_name'])
+    print("source trans query path",row['source_transformation_query_path'])
 
-    if row['target_type'] in ( 'csv', 'json','avro', 'parquet'):
-        target = read_file(path = row['target'],
-                           type=row['target_type'],
-                           schema_path=row['target_schema_path'],
-                           spark=spark,
-                           multiline=row['target_json_multiline']
-                           )
+    if row['source_type'] == 'snowflake':
+        source = read_snowflake(spark=spark,
+                                table = row['source'] ,
+                                db_name = row['source_db_name'],
+                                query_path=row['source_transformation_query_path'])
+
+
+    if row['target_type'] == 'snowflake' :
+        target = read_snowflake(spark=spark,
+                                table=row['target'],
+                                db_name=row['target_db_name'],
+                                query_path=row['target_transformation_query_path'])
+
 
     source.show(truncate=False)
     target.show(truncate=False)
