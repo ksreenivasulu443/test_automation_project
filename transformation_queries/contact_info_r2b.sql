@@ -1,1 +1,1 @@
-SELECT * FROM SAMPLEDB.CONTACT_INFO.contact_info_raw
+select * from CONTACT_INFO_RAW

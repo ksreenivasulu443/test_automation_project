@@ -66,7 +66,7 @@ def read_snowflake(spark, table, database,query_path):
             .option("dbtable", table) \
             .load()
 
-        return df
+    return df
 
 # df = read_snowflake(spark)
 #
