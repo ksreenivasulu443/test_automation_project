@@ -11,6 +11,7 @@ spark = SparkSession.builder.master("local[1]") \
     .config("spark.jars", snow_jar) \
     .config("spark.driver.extraClassPath", snow_jar) \
     .config("spark.executor.extraClassPath", snow_jar) \
+    .config("spark.jars.packages", "org.apache.spark:spark-avro_2.12:3.4.0") \
     .getOrCreate()
 
 test_cases = pd.read_excel(r"C:\Users\A4952\PycharmProjects\test_automation_project\config\Master_Test_Template.xlsx")
@@ -39,6 +40,7 @@ testcases = validation.collect()
 print("testcases in list form", testcases)
 
 for row in testcases:
+    print("#"*40)
     print("source_file_path/table and type", row['source'], row['source_type'])
     print("target_file_path/table", row['target'], row['target_type'])
     print("source db name", row['source_db_name'])
@@ -49,6 +51,12 @@ for row in testcases:
                                 table=row['source'],
                                 database=row['source_db_name'],
                                 query_path=row['source_transformation_query_path'])
+    else:
+        source = read_file(spark=spark,
+                           path=row['source'],
+                           type=row['source_type'],
+                           schema_path=row['source_schema_path'],
+                           multiline=row['source_json_multiline'])
 
     if row['target_type'] == 'snowflake':
         target = read_snowflake(spark=spark,
@@ -56,5 +64,13 @@ for row in testcases:
                                 database=row['target_db_name'],
                                 query_path=row['target_transformation_query_path'])
 
+    else:
+        target = read_file(spark=spark,
+                           path=row['target'],
+                           type=row['target_type'],
+                           schema_path=row['target_schema_path'],
+                           multiline=row['target_json_multiline'])
+
     source.show(truncate=False)
     target.show(truncate=False)
+    print("#" * 40)

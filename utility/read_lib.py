@@ -5,16 +5,16 @@ from pyspark.sql.types import StructType
 import json
 from utility.genereal_lib import flatten
 
-snow_jar = r"C:\Users\A4952\PycharmProjects\June_automation_batch1\jars\snowflake-jdbc-3.14.3.jar"
-spark = SparkSession.builder.master("local[1]") \
-    .appName("test") \
-    .config("spark.jars", snow_jar) \
-    .config("spark.driver.extraClassPath", snow_jar) \
-    .config("spark.executor.extraClassPath", snow_jar) \
-    .getOrCreate()
+# snow_jar = r"C:\Users\A4952\PycharmProjects\June_automation_batch1\jars\snowflake-jdbc-3.14.3.jar"
+# spark = SparkSession.builder.master("local[1]") \
+#     .appName("test") \
+#     .config("spark.jars", snow_jar) \
+#     .config("spark.driver.extraClassPath", snow_jar) \
+#     .config("spark.executor.extraClassPath", snow_jar) \
+#     .getOrCreate()
 
 
-def read_file(path, type, schema_path, spark, multiline):
+def read_file(spark,path, type, schema_path, multiline):
     if type == 'csv':
         if schema_path != 'NOT APPL':
             with open(schema_path, 'r') as schema_file:

@@ -1,27 +1,26 @@
 from pyspark.sql import SparkSession
 
-
-
-snow_jar = r"C:\Users\A4952\PycharmProjects\June_automation_batch1\jars\snowflake-jdbc-3.14.3.jar"
+# Initialize Spark session
+# spark = SparkSession.builder \
+#     .appName("Read Avro Example") \
+#     .config("spark.jars.packages", r"C:\Users\A4952\PycharmProjects\test_automation_project\jar\spark-avro_2.13-3.4.0.jar") \
+#     .getOrCreate()
+snow_jar= r"C:\Users\A4952\PycharmProjects\test_automation_project\jar\spark-avro_2.13-3.4.0.jar"
 spark = SparkSession.builder.master("local[1]") \
-                .appName("test") \
-                .config("spark.jars", snow_jar) \
-                .config("spark.driver.extraClassPath", snow_jar) \
-                .config("spark.executor.extraClassPath", snow_jar) \
-                .getOrCreate()
+    .appName("test") \
+    .config("spark.jars", snow_jar) \
+    .config("spark.driver.extraClassPath", snow_jar) \
+    .config("spark.executor.extraClassPath", snow_jar) \
+    .getOrCreate()
 
+# Specify the path to your Avro file
+avro_file_path = r"C:\Users\A4952\PycharmProjects\test_automation_project\files\userdata1.avro"
 
-url = 'jdbc:snowflake://epizybn-qo01792.snowflakecomputing.com/?user=KSREENIVASULU443&password=Dharmavaram1@&warehouse=COMPUTE_WH&db=SAMPLEDB&schema=CONTACT_INFO'
-with open(r"C:\Users\A4952\PycharmProjects\test_automation_project\transformation_queries\contact_info_r2b.sql", "r") as file:
-    sql_query = file.read()
-print(sql_query)
-df = spark.read \
-                .format("jdbc") \
-                .option("driver", "net.snowflake.client.jdbc.SnowflakeDriver") \
-                .option("url", url) \
-                .option("query", sql_query) \
-                .load()
+# Read the Avro file
+df = spark.read.format("avro").load(avro_file_path)
 
+# Show the contents of the DataFrame
 df.show()
 
-
+# Stop the Spark session
+spark.stop()
