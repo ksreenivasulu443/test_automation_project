@@ -5,7 +5,13 @@ from pyspark.sql.types import StructType
 import json
 from utility.genereal_lib import flatten
 
-spark = SparkSession.builder.getOrCreate()
+snow_jar = r"C:\Users\A4952\PycharmProjects\June_automation_batch1\jars\snowflake-jdbc-3.14.3.jar"
+spark = SparkSession.builder.master("local[1]") \
+    .appName("test") \
+    .config("spark.jars", snow_jar) \
+    .config("spark.driver.extraClassPath", snow_jar) \
+    .config("spark.executor.extraClassPath", snow_jar) \
+    .getOrCreate()
 
 
 def read_file(path, type, schema_path, spark, multiline):
@@ -37,53 +43,32 @@ def read_file(path, type, schema_path, spark, multiline):
     elif type == 'dat':
         pass
 
-def read_snowflake(spark,
-            table,
-            db_name,
-            query_path):
+def read_snowflake(spark, table, database,query_path):
 
     with open(r"C:\Users\A4952\PycharmProjects\test_automation_project\config\database_connection.json") as f:
-        config = json.load(f)[db_name]
-
-    print("config", config)
+        config = json.load(f)[database]
 
     if query_path != 'NOT APPL':
         with open(query_path, "r") as file:
             sql_query = file.read()
-            print(sql_query)
-            print(config)
-
-            df = spark.read \
-                .format("jdbc") \
-                .option("driver", config['driver']) \
-                .option("url", config['jdbc_url']) \
-                .option("query", sql_query) \
-                .load()
-
+        print(sql_query)
+        df = spark.read \
+            .format("jdbc") \
+            .option("driver", "net.snowflake.client.jdbc.SnowflakeDriver") \
+            .option("url", config['jdbc_url']) \
+            .option("query", sql_query) \
+            .load()
     else:
-            # df = spark.read \
-            #     .format("jdbc") \
-            #     .option("driver", config['driver']) \
-            #     .option("url", config['jdbc_url']) \
-            #     .option("dbtable", table) \
-            #     .load()
-            snow_jar = r"C:\Users\A4952\PycharmProjects\June_automation_batch1\jars\snowflake-jdbc-3.14.3.jar"
+        df = spark.read \
+            .format("jdbc") \
+            .option("driver", "net.snowflake.client.jdbc.SnowflakeDriver") \
+            .option("url", config['jdbc_url']) \
+            .option("dbtable", table) \
+            .load()
 
-            spark = SparkSession.builder.master("local[1]") \
-                .appName("test") \
-                .config("spark.jars", snow_jar) \
-                .config("spark.driver.extraClassPath", snow_jar) \
-                .config("spark.executor.extraClassPath", snow_jar) \
-                .getOrCreate()
+        return df
 
-            url = 'jdbc:snowflake://epizybn-qo01792.snowflakecomputing.com/?user=KSREENIVASULU443&password=Dharmavaram1@&warehouse=COMPUTE_WH&db=SAMPLEDB&schema=CONTACT_INFO'
-
-            df = spark.read \
-                .format("jdbc") \
-                .option("driver", "net.snowflake.client.jdbc.SnowflakeDriver") \
-                .option("url", url) \
-                .option("query", 'select * from CONTACT_INFO_RAW') \
-                .load()
-
-    return df
+# df = read_snowflake(spark)
+#
+# df.show()
 
