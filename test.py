@@ -10,19 +10,17 @@ spark = SparkSession.builder.master("local[1]") \
                 .config("spark.executor.extraClassPath", snow_jar) \
                 .getOrCreate()
 
-def snowflake(spark):
 
-    url = 'jdbc:snowflake://epizybn-qo01792.snowflakecomputing.com/?user=KSREENIVASULU443&password=Dharmavaram1@&warehouse=COMPUTE_WH&db=SAMPLEDB&schema=CONTACT_INFO'
-
-    df = spark.read \
-                    .format("jdbc") \
-                    .option("driver", "net.snowflake.client.jdbc.SnowflakeDriver") \
-                    .option("url", url) \
-                    .option("query", 'select * from CONTACT_INFO_RAW') \
-                    .load()
-    return df
-
-df = snowflake(spark)
+url = 'jdbc:snowflake://epizybn-qo01792.snowflakecomputing.com/?user=KSREENIVASULU443&password=Dharmavaram1@&warehouse=COMPUTE_WH&db=SAMPLEDB&schema=CONTACT_INFO'
+with open(r"C:\Users\A4952\PycharmProjects\test_automation_project\transformation_queries\contact_info_r2b.sql", "r") as file:
+    sql_query = file.read()
+print(sql_query)
+df = spark.read \
+                .format("jdbc") \
+                .option("driver", "net.snowflake.client.jdbc.SnowflakeDriver") \
+                .option("url", url) \
+                .option("query", sql_query) \
+                .load()
 
 df.show()
 
