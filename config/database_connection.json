@@ -1,0 +1,19 @@
+{
+  "oracle_db_test": {
+    "url": "jdbc:oracle:thin:@localhost:1521:ORCL",
+    "user": "scott",
+    "password": "tiger",
+    "driver": "oracle.jdbc.driver.OracleDriver"
+  },
+  "postgres_db_dev": {
+    "url": "jdbc:postgresql://localhost:5432/postgres",
+    "user": "postgres",
+    "password": "Dharmavaram1@",
+    "driver": "org.postgresql.Driver"
+  },
+  "snowflake_db": {
+    "driver": "net.snowflake.client.jdbc.SnowflakeDriver",
+    "jdbc_url" : "jdbc:snowflake://epizybn-qo01792.snowflakecomputing.com/?user=KSREENIVASULU443&password=Dharmavaram1@&warehouse=COMPUTE_WH&db=SAMPLEDB&schema=CONTACT_INFO"
+
+  }
+}

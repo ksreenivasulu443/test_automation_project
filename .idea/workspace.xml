@@ -5,11 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="09255fa2-d8ac-4ef0-9cc1-e50a090296db" name="Changes" comment="Read library">
-      <change afterPath="$PROJECT_DIR$/files/userdata1.avro" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/files/userdata1.parquet" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jar/snowflake-jdbc-3.14.3.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/jar/spark-avro_2.13-3.5.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/transformation_queries/contact_info_r2b.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/Master_Test_Template.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/config/Master_Test_Template.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/database_connection.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/database_connection.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utility/read_lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/utility/read_lib.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -36,26 +39,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.genereal_lib.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.read_lib.executor": "Run",
-    "Python.runner.executor": "Run",
-    "Python.test.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/A4952/PycharmProjects/test_automation_project/files",
-    "settings.editor.selected.configurable": "com.intellij.pycharm.community.ide.impl.configuration.PythonContentEntriesConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.genereal_lib.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.read_lib.executor&quot;: &quot;Run&quot;,
+    &quot;Python.runner.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/A4952/PycharmProjects/test_automation_project/jar&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.intellij.pycharm.community.ide.impl.configuration.PythonContentEntriesConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\A4952\PycharmProjects\test_automation_project\jar" />
       <recent name="C:\Users\A4952\PycharmProjects\test_automation_project\files" />
       <recent name="C:\Users\A4952\PycharmProjects\test_automation_project\config" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.genereal_lib">
+  <component name="RunManager" selected="Python.runner">
     <configuration name="genereal_lib" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="test_automation_project" />
       <option name="ENV_FILES" value="" />
@@ -168,9 +172,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.genereal_lib" />
         <item itemvalue="Python.runner" />
         <item itemvalue="Python.test" />
+        <item itemvalue="Python.genereal_lib" />
         <item itemvalue="Python.read_lib" />
       </list>
     </recent_temporary>
@@ -215,7 +219,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725593565040</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Read library">
+      <option name="closed" value="true" />
+      <created>1725937025508</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1725937025508</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
