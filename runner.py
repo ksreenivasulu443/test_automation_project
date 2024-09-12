@@ -7,10 +7,8 @@ from utility.read_lib import read_file, read_snowflake, read_db
 
 # Jars setup
 project_path = os.getcwd()
-print("project_path", project_path)
 snow_jar = project_path+"\jar\snowflake-jdbc-3.14.3.jar"
 postgres_jar = project_path+"\jar\postgresql-42.2.5.jar"
-
 
 jars = snow_jar + ',' + postgres_jar
 
