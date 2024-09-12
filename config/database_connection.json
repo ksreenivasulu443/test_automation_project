@@ -5,11 +5,17 @@
     "password": "tiger",
     "driver": "oracle.jdbc.driver.OracleDriver"
   },
-  "postgres_db_dev": {
+  "postgres_db": {
     "url": "jdbc:postgresql://localhost:5432/postgres",
     "user": "postgres",
     "password": "Dharmavaram1@",
     "driver": "org.postgresql.Driver"
+  },
+    "sqlserver_db": {
+    "url": "jdbc:sqlserver://;serverName=katsreen100.database.windows.net;databaseName=sampledb",
+    "user": "katsreen100",
+    "password": "Dharmavaram1@",
+    "driver": "com.microsoft.sqlserver.jdbc.SQLServerDriver"
   },
   "snowflake_db": {
     "driver": "net.snowflake.client.jdbc.SnowflakeDriver",

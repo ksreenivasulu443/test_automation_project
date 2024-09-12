@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09255fa2-d8ac-4ef0-9cc1-e50a090296db" name="Changes" comment="Read library" />
+    <list default="true" id="09255fa2-d8ac-4ef0-9cc1-e50a090296db" name="Changes" comment="Read library">
+      <change afterPath="$PROJECT_DIR$/jar/postgresql-42.2.5.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/Master_Test_Template.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/config/Master_Test_Template.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/database_connection.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/database_connection.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utility/genereal_lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/utility/genereal_lib.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utility/read_lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/utility/read_lib.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,7 +46,7 @@
     "Python.test.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/spark/spark-3.4.2-bin-hadoop3/python",
+    "last_opened_file_path": "C:/Users/A4952/PycharmProjects/test_automation_project/jar",
     "settings.editor.selected.configurable": "com.intellij.pycharm.community.ide.impl.configuration.PythonContentEntriesConfigurable"
   }
 }]]></component>
@@ -163,9 +171,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.runner" />
+        <item itemvalue="Python.genereal_lib" />
         <item itemvalue="Python.read_lib" />
         <item itemvalue="Python.test" />
-        <item itemvalue="Python.genereal_lib" />
       </list>
     </recent_temporary>
   </component>

@@ -1,22 +1,31 @@
 import pandas as pd
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import collect_set
+import os
 
-from utility.read_lib import read_file, read_snowflake
+from utility.read_lib import read_file, read_snowflake, read_db
 
-snow_jar = r"C:\Users\A4952\PycharmProjects\June_automation_batch1\jars\snowflake-jdbc-3.14.3.jar"
+# Jars setup
+project_path = os.getcwd()
+print("project_path", project_path)
+snow_jar = project_path+"\jar/snowflake-jdbc-3.14.3.jar"
+#snow_jar = r"C:\Users\A4952\PycharmProjects\June_automation_batch1\jars\snowflake-jdbc-3.14.3.jar"
+postgres_jar = project_path+"\jar\postgresql-42.2.5.jar"
+# postgres_jar = r"C:\Users\A4952\PycharmProjects\test_automation_project\jar\postgresql-42.2.5.jar"
 
+jars = snow_jar + ',' + postgres_jar
+
+# Spark Session
 spark = SparkSession.builder.master("local[1]") \
     .appName("test") \
-    .config("spark.jars", snow_jar) \
-    .config("spark.driver.extraClassPath", snow_jar) \
-    .config("spark.executor.extraClassPath", snow_jar) \
+    .config("spark.jars", jars) \
+    .config("spark.driver.extraClassPath", jars) \
+    .config("spark.executor.extraClassPath", jars) \
     .config("spark.jars.packages", "org.apache.spark:spark-avro_2.12:3.4.0") \
     .getOrCreate()
 
+# Test cases read
 test_cases = pd.read_excel(r"C:\Users\A4952\PycharmProjects\test_automation_project\config\Master_Test_Template.xlsx")
-print("all test cases")
-print(test_cases.head(10))
 
 run_test_case = test_cases.loc[(test_cases.execution_ind == 'Y')]
 print("Ind==Y records")
@@ -39,6 +48,7 @@ testcases = validation.collect()
 
 print("testcases in list form", testcases)
 
+# Test case execution
 for row in testcases:
     print("#"*40)
     print("source_file_path/table and type", row['source'], row['source_type'])
@@ -48,6 +58,11 @@ for row in testcases:
 
     if row['source_type'] == 'snowflake':
         source = read_snowflake(spark=spark,
+                                table=row['source'],
+                                database=row['source_db_name'],
+                                query_path=row['source_transformation_query_path'])
+    elif row['source_type'] == 'table':
+        source = read_db(spark=spark,
                                 table=row['source'],
                                 database=row['source_db_name'],
                                 query_path=row['source_transformation_query_path'])
@@ -64,6 +79,11 @@ for row in testcases:
                                 database=row['target_db_name'],
                                 query_path=row['target_transformation_query_path'])
 
+    elif row['target_type'] == 'table':
+        target = read_db(spark=spark,
+                                table=row['target'],
+                                database=row['target_db_name'],
+                                query_path=row['target_transformation_query_path'])
     else:
         target = read_file(spark=spark,
                            path=row['target'],
@@ -73,4 +93,5 @@ for row in testcases:
 
     source.show(truncate=False)
     target.show(truncate=False)
-    print("#" * 40)
+
+

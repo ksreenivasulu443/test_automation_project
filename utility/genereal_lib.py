@@ -1,13 +1,14 @@
 from pyspark.sql.functions import col, explode_outer
 
 from pyspark.sql.types import ArrayType, StructType
-# from pyspark.sql import SparkSession
-#
-# spark = SparkSession.builder.master('local[1]').getOrCreate()
-# df = spark.read.json(r'C:\Users\A4952\PycharmProjects\test_automation_project\files\Complex2.json', multiLine=True)
-# df.show()
+import os
+import json
+given_path = os.path.abspath(os.path.dirname(__file__))
+print("gp",given_path)
+path = os.path.dirname(given_path)
+print("path", path)
 
-# df.printSchema()
+
 def flatten(df):
     # compute Complex Fields (Lists and Structs) in Schema
     complex_fields = dict([(field.name, field.dataType)
@@ -46,6 +47,28 @@ def flatten(df):
 
     return df
 
-# flatten_output = flatten(df)
-#
-# flatten_output.show()
+def read_config(database):
+    parent_path = os.path.dirname(given_path) + '\\config\\database_connection.json'
+    # Read the JSON configuration file
+    with open(parent_path) as f:
+        config = json.load(f)[database]
+    return config
+
+def fetch_transformation_query_path(sql_file_path):
+    path = os.path.dirname(given_path) + '\\transformation_queries\\' + sql_file_path
+    print("transformation_query_path",path)
+    with open(path, "r") as file:
+        sql_query = file.read()
+
+    return sql_query
+
+def read_schema(schema_file_name):
+    path = os.path.dirname(given_path) + '\\schema_files\\' +schema_file_name
+    # Read the JSON configuration file
+    with open(path, 'r') as schema_file:
+        schema = StructType.fromJson(json.load(schema_file))
+    return schema
+
+def fetch_file_path(file_name):
+    path = os.path.dirname(given_path) + '/files/'+file_name
+    return path
