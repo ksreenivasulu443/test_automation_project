@@ -3,22 +3,16 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType
 import json
-from utility.genereal_lib import flatten
-
-# snow_jar = r"C:\Users\A4952\PycharmProjects\June_automation_batch1\jars\snowflake-jdbc-3.14.3.jar"
-# spark = SparkSession.builder.master("local[1]") \
-#     .appName("test") \
-#     .config("spark.jars", snow_jar) \
-#     .config("spark.driver.extraClassPath", snow_jar) \
-#     .config("spark.executor.extraClassPath", snow_jar) \
-#     .getOrCreate()
+from utility.genereal_lib import flatten, read_config, fetch_transformation_query_path, read_schema,fetch_file_path
 
 
-def read_file(spark,path, type, schema_path, multiline):
+def read_file(spark, path, type, schema_path, multiline):
+    path = fetch_file_path(path)
     if type == 'csv':
         if schema_path != 'NOT APPL':
-            with open(schema_path, 'r') as schema_file:
-                schema = StructType.fromJson(json.load(schema_file))
+            schema = read_schema(schema_path)
+            # with open(schema_path, 'r') as schema_file:
+            #     schema = StructType.fromJson(json.load(schema_file))
             df = spark.read.schema(schema).csv(path, header=True)
             return df
         else:
@@ -43,14 +37,12 @@ def read_file(spark,path, type, schema_path, multiline):
     elif type == 'dat':
         pass
 
-def read_snowflake(spark, table, database,query_path):
 
-    with open(r"C:\Users\A4952\PycharmProjects\test_automation_project\config\database_connection.json") as f:
-        config = json.load(f)[database]
+def read_snowflake(spark, table, database, query_path):
+    config = read_config(database)
 
     if query_path != 'NOT APPL':
-        with open(query_path, "r") as file:
-            sql_query = file.read()
+        sql_query = fetch_transformation_query_path(query_path)
         print(sql_query)
         df = spark.read \
             .format("jdbc") \
@@ -68,7 +60,32 @@ def read_snowflake(spark, table, database,query_path):
 
     return df
 
-# df = read_snowflake(spark)
-#
-# df.show()
 
+def read_db(spark, table, database, query_path):
+    # config data( This line is to read data from database_connect.json file for specific db
+    # here datavalue value coming form source_db_name / target_db_name
+    config = read_config(database)
+
+    if query_path != 'NOT APPL':
+        #  fetch_transformation_query_path ( This line is to  read sql query from sql file )
+        # here query path value comes from source_transformation_query_path/target_transformation_query_path
+        sql_query = fetch_transformation_query_path(query_path)
+        print(sql_query)
+        df = spark.read.format("jdbc"). \
+            option("url", config['url']). \
+            option("user", config['user']). \
+            option("password", config['password']). \
+            option("query", sql_query). \
+            option("driver", config['driver']).load()
+    else:
+        df = spark.read.format("jdbc"). \
+            option("url", config['url']). \
+            option("user", config['user']). \
+            option("password", config['password']). \
+            option("dbtable", table). \
+            option("driver", config['driver']).load()
+
+    return df
+
+def read_cosmos():
+    pass
