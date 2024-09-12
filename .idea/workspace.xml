@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="09255fa2-d8ac-4ef0-9cc1-e50a090296db" name="Changes" comment="Read library">
-      <change afterPath="$PROJECT_DIR$/jar/postgresql-42.2.5.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/Master_Test_Template.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/config/Master_Test_Template.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/database_connection.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/database_connection.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utility/genereal_lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/utility/genereal_lib.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utility/read_lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/utility/read_lib.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,7 +244,23 @@
       <option name="project" value="LOCAL" />
       <updated>1726059127368</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Read library">
+      <option name="closed" value="true" />
+      <created>1726111151279</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1726111151279</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Read library">
+      <option name="closed" value="true" />
+      <created>1726111483524</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1726111483524</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
