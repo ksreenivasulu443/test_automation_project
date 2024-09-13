@@ -2,7 +2,7 @@
   "fields": [
     {
       "metadata": {},
-      "name": "sno",
+      "name": "Identifier",
       "nullable": true,
       "type": "long"
     },
@@ -14,7 +14,7 @@
     },
     {
       "metadata": {},
-      "name": "givenname",
+      "name": "given_name",
       "nullable": true,
       "type": "string"
     },
