@@ -4,6 +4,7 @@ from pyspark.sql.functions import collect_set
 import os
 
 from utility.read_lib import read_file, read_snowflake, read_db
+from utility.validation_lib import count_check, duplicate_check, uniqueness_check, null_value_check
 
 # Jars setup
 project_path = os.getcwd()
@@ -91,5 +92,18 @@ for row in testcases:
 
     source.show(truncate=False)
     target.show(truncate=False)
+
+
+    print("validations", row['validation_Type'])
+    for validation in row['validation_Type']:
+        if validation == 'count_check':
+            count_check(source=source, target=target)
+        elif validation == 'duplicate':
+            duplicate_check(target=target, key_cols=row['key_col_list'])
+        elif validation == 'uniqueness_check':
+            uniqueness_check( target=target, unique_col=row['unique_col_list'])
+        elif validation == 'null_value_check':
+            null_value_check(target=target, null_cols = row['null_col_list'])
+
 
 
