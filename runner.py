@@ -4,7 +4,8 @@ from pyspark.sql.functions import collect_set
 import os
 
 from utility.read_lib import read_file, read_snowflake, read_db
-from utility.validation_lib import count_check, duplicate_check, uniqueness_check, null_value_check
+from utility.validation_lib import count_check, duplicate_check, uniqueness_check, null_value_check, \
+    records_present_only_in_target, records_present_only_in_source, data_compare
 
 # Jars setup
 project_path = os.getcwd()
@@ -90,8 +91,8 @@ for row in testcases:
                            schema_path=row['target_schema_path'],
                            multiline=row['target_json_multiline'])
 
-    source.show(truncate=False)
-    target.show(truncate=False)
+    source.show(truncate=False) # expected(100,18)
+    target.show(truncate=False) # actual(99, 18 )
 
 
     print("validations", row['validation_Type'])
@@ -104,6 +105,10 @@ for row in testcases:
             uniqueness_check( target=target, unique_col=row['unique_col_list'])
         elif validation == 'null_value_check':
             null_value_check(target=target, null_cols = row['null_col_list'])
-
-
+        elif validation == 'records_present_only_target':
+            records_present_only_in_target(source=source, target=target, keyList=row['key_col_list'])
+        elif validation == 'records_present_only_in_source':
+            records_present_only_in_source(source=source, target=target, keyList=row['key_col_list'])
+        elif validation == 'data_compare':
+            data_compare(source=source, target=target, keycolumn=row['key_col_list'])
 
