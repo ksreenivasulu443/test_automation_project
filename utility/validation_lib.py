@@ -109,16 +109,13 @@ def data_compare(source, target, keycolumn):
     else:
         pass
 
-
-
     if failed.count() > 0:
 
-        failed2 = failed.select(keycolumn).distinct().withColumn("hash_key",sha2(concat(*[col(c) for c in keycolumn]), 256))
-        source = source.withColumn("hash_key", sha2(concat(*[col(c) for c in keycolumn]), 256)).\
-            join(failed2,["hash_key"],how='left_semi').drop('hash_key')
-        target = target.withColumn("hash_key", sha2(concat(*[col(c) for c in keycolumn]), 256)). \
-        join(failed2,["hash_key"],how='left_semi').drop('hash_key')
-
+        # failed2 = failed.select(keycolumn).distinct().withColumn("hash_key",sha2(concat(*[col(c) for c in keycolumn]), 256))
+        # source = source.withColumn("hash_key", sha2(concat(*[col(c) for c in keycolumn]), 256)).\
+        #     join(failed2,["hash_key"],how='left_semi').drop('hash_key')
+        # target = target.withColumn("hash_key", sha2(concat(*[col(c) for c in keycolumn]), 256)). \
+        # join(failed2,["hash_key"],how='left_semi').drop('hash_key')
 
         print("columnList", columnList)
         print("keycolumns", keycolumn)
