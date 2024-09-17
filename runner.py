@@ -5,12 +5,12 @@ import os
 
 from utility.read_lib import read_file, read_snowflake, read_db
 from utility.validation_lib import count_check, duplicate_check, uniqueness_check, null_value_check, \
-    records_present_only_in_target, records_present_only_in_source, data_compare
+    records_present_only_in_target, records_present_only_in_source, data_compare, schema_check, name_check
 
 # Jars setup
 project_path = os.getcwd()
-snow_jar = project_path+"\jar\snowflake-jdbc-3.14.3.jar"
-postgres_jar = project_path+"\jar\postgresql-42.2.5.jar"
+snow_jar = project_path + "\jar\snowflake-jdbc-3.14.3.jar"
+postgres_jar = project_path + "\jar\postgresql-42.2.5.jar"
 
 jars = snow_jar + ',' + postgres_jar
 
@@ -22,6 +22,19 @@ spark = SparkSession.builder.master("local[1]") \
     .config("spark.executor.extraClassPath", jars) \
     .config("spark.jars.packages", "org.apache.spark:spark-avro_2.12:3.4.0") \
     .getOrCreate()
+
+Out = {
+    "validation_Type": [],
+    "Source_name": [],
+    "target_name": [],
+    "Number_of_source_Records": [],
+    "Number_of_target_Records": [],
+    "Number_of_failed_Records": [],
+    "column": [],
+    "Status": [],
+    "source_type": [],
+    "target_type": []
+}
 
 test_case_file_path = project_path + '\config\Master_Test_Template.xlsx'
 # Test cases read
@@ -50,7 +63,7 @@ print("testcases in list form", testcases)
 
 # Test case execution
 for row in testcases:
-    print("#"*40)
+    print("#" * 40)
     print("source_file_path/table and type", row['source'], row['source_type'])
     print("target_file_path/table", row['target'], row['target_type'])
     print("source db name", row['source_db_name'])
@@ -63,9 +76,9 @@ for row in testcases:
                                 query_path=row['source_transformation_query_path'])
     elif row['source_type'] == 'table':
         source = read_db(spark=spark,
-                                table=row['source'],
-                                database=row['source_db_name'],
-                                query_path=row['source_transformation_query_path'])
+                         table=row['source'],
+                         database=row['source_db_name'],
+                         query_path=row['source_transformation_query_path'])
     else:
         source = read_file(spark=spark,
                            path=row['source'],
@@ -81,9 +94,9 @@ for row in testcases:
 
     elif row['target_type'] == 'table':
         target = read_db(spark=spark,
-                                table=row['target'],
-                                database=row['target_db_name'],
-                                query_path=row['target_transformation_query_path'])
+                         table=row['target'],
+                         database=row['target_db_name'],
+                         query_path=row['target_transformation_query_path'])
     else:
         target = read_file(spark=spark,
                            path=row['target'],
@@ -91,9 +104,9 @@ for row in testcases:
                            schema_path=row['target_schema_path'],
                            multiline=row['target_json_multiline'])
 
-    source.show(truncate=False) # expected(100,18)
-    target.show(truncate=False) # actual(99, 18 )
-
+    source.show(truncate=False)  # expected(100,18)
+    source.printSchema()
+    target.show(truncate=False)  # actual(99, 18 )
 
     print("validations", row['validation_Type'])
     for validation in row['validation_Type']:
@@ -102,13 +115,16 @@ for row in testcases:
         elif validation == 'duplicate':
             duplicate_check(target=target, key_cols=row['key_col_list'])
         elif validation == 'uniqueness_check':
-            uniqueness_check( target=target, unique_col=row['unique_col_list'])
+            uniqueness_check(target=target, unique_col=row['unique_col_list'])
         elif validation == 'null_value_check':
-            null_value_check(target=target, null_cols = row['null_col_list'])
+            null_value_check(target=target, null_cols=row['null_col_list'])
         elif validation == 'records_present_only_target':
             records_present_only_in_target(source=source, target=target, keyList=row['key_col_list'])
         elif validation == 'records_present_only_in_source':
             records_present_only_in_source(source=source, target=target, keyList=row['key_col_list'])
         elif validation == 'data_compare':
             data_compare(source=source, target=target, keycolumn=row['key_col_list'])
-
+        elif validation == 'schema_check':
+            schema_check(source=source, target=target, spark=spark)
+        elif validation == 'name_check':
+            name_check(target=target, column=row['dq_column'])
