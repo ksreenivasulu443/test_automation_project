@@ -1,4 +1,4 @@
-from pyspark.sql.functions import col, upper, isnan, when, trim, count,lit,sha2
+from pyspark.sql.functions import col, regexp_extract,upper, isnan, when, trim, count,lit,sha2,concat
 
 
 def count_check(source, target):
@@ -93,7 +93,6 @@ def data_compare(source, target, keycolumn):
     keycolumn = keycolumn.split(",")
     keycolumn = [i.lower() for i in keycolumn]
 
-
     columnList = source.columns
     smt = source.exceptAll(target).withColumn("datafrom", lit("source"))
     tms = target.exceptAll(source).withColumn("datafrom", lit("target"))
@@ -111,11 +110,11 @@ def data_compare(source, target, keycolumn):
 
     if failed.count() > 0:
 
-        # failed2 = failed.select(keycolumn).distinct().withColumn("hash_key",sha2(concat(*[col(c) for c in keycolumn]), 256))
-        # source = source.withColumn("hash_key", sha2(concat(*[col(c) for c in keycolumn]), 256)).\
-        #     join(failed2,["hash_key"],how='left_semi').drop('hash_key')
-        # target = target.withColumn("hash_key", sha2(concat(*[col(c) for c in keycolumn]), 256)). \
-        # join(failed2,["hash_key"],how='left_semi').drop('hash_key')
+        failed2 = failed.select(keycolumn).distinct().withColumn("hash_key",sha2(concat(*[col(c) for c in keycolumn]), 256))
+        source = source.withColumn("hash_key", sha2(concat(*[col(c) for c in keycolumn]), 256)).\
+            join(failed2,["hash_key"],how='left_semi').drop('hash_key')
+        target = target.withColumn("hash_key", sha2(concat(*[col(c) for c in keycolumn]), 256)). \
+        join(failed2,["hash_key"],how='left_semi').drop('hash_key')
 
         print("columnList", columnList)
         print("keycolumns", keycolumn)
@@ -131,6 +130,44 @@ def data_compare(source, target, keycolumn):
                 temp_join.withColumn("comparison", when(col('source_' + column) == col("target_" + column),
                                                         "True").otherwise("False")).filter(
                     f"comparison == False and source_{column} is not null and target_{column} is not null").show()
+
+def schema_check(source, target, spark):
+
+    source.createOrReplaceTempView("source")
+    target.createOrReplaceTempView("target")
+    source_schema = spark.sql("describe source")
+    source_schema.show()
+    source_schema.createOrReplaceTempView("source_schema")
+    target_schema = spark.sql("describe target")
+    target_schema.createOrReplaceTempView("target_schema")
+
+    failed = spark.sql('''select * from (select lower(a.col_name) source_col_name,lower(b.col_name) target_col_name, a.data_type as source_data_type, b.data_type as target_data_type, 
+    case when a.data_type=b.data_type then "pass" else "fail" end status
+    from source_schema a full join target_schema b on lower(a.col_name)=lower(b.col_name)) where status='fail' ''')
+    source_count = source_schema.count()
+    target_count = target_schema.count()
+    failed_count = failed.count()
+    failed.show()
+    if failed_count > 0:
+        pass
+    else:
+        pass
+
+def name_check(target, column):
+    pattern = "^[a-zA-Z]"
+
+    # Add a new column 'is_valid' indicating if the name contains only alphabetic characters
+    df = target.withColumn("is_valid", regexp_extract(col(column), pattern, 0) != "")
+    df.show()
+    target_count = target.count()
+    failed = df.filter('is_valid = False ')
+    failed.show()
+    failed_count = failed.count()
+    if failed_count > 0:
+        pass
+    else:
+        pass
+
 
 
 
