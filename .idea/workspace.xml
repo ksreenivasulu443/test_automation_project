@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="09255fa2-d8ac-4ef0-9cc1-e50a090296db" name="Changes" comment="Read library">
-      <change afterPath="$PROJECT_DIR$/utility/report_lib.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/Master_Test_Template.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/config/Master_Test_Template.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/Contact_info_t.csv" beforeDir="false" afterPath="$PROJECT_DIR$/files/Contact_info_t.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runner.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utility/validation_lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/utility/validation_lib.py" afterDir="false" />
     </list>

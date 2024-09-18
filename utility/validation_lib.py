@@ -1,7 +1,9 @@
-from pyspark.sql.functions import col, regexp_extract,upper, isnan, when, trim, count,lit,sha2,concat
+from pyspark.sql.functions import udf,col, regexp_extract,upper, isnan, when, trim, count,lit,sha2,concat
+from pyspark.sql.types import BooleanType
+from datetime import datetime
+from utility.report_lib import write_output
 
-
-def count_check(source, target):
+def count_check(source, target,row,Out):
     print("*" * 40)
     print("count check validation started")
     src_cnt = source.count()
@@ -12,13 +14,37 @@ def count_check(source, target):
         print(
             f"source count is {src_cnt}, target count is {tgt_cnt}, Count is not matching between source and target, diff is",
             diff)
+        write_output(validation_Type=row['validation_Type'],
+                     source=row['source'],
+                     target=row['target'],
+                     Number_of_source_Records=src_cnt,
+                     Number_of_target_Records=tgt_cnt,
+                     Number_of_failed_Records=diff,
+                     column=row['key_col_list'],
+                     Status='FAIL',
+                     source_type=row['source_type'],
+                     target_type=row['target_type'],
+                     Out=Out)
     else:
         print(f"source count is {src_cnt}, target count is {tgt_cnt} count is matching between source and target")
+        write_output(validation_Type=row['validation_Type'],
+                     source=row['source'],
+                     target=row['target'],
+                     Number_of_source_Records=src_cnt,
+                     Number_of_target_Records=tgt_cnt,
+                     Number_of_failed_Records=diff,
+                     column=row['key_col_list'],
+                     Status='PASS',
+                     source_type=row['source_type'],
+                     target_type=row['target_type'],
+                     Out=Out)
+
+
     print("*" * 40)
     print("count check validation ended")
 
 
-def duplicate_check(target, key_cols):
+def duplicate_check(target, key_cols,row,Out):
     print("*" * 40)
     print("duplicate check validation started")
     key_cols_list = key_cols.split(',')
@@ -27,6 +53,17 @@ def duplicate_check(target, key_cols):
     fail_count = duplicate_df.count()
     if fail_count > 0:
         print("Duplicates present")
+        # write_output(validation_Type=row['validation_Type'],
+        #              source=row['source'],
+        #              target=row['target'],
+        #              Number_of_source_Records=src_cnt,
+        #              Number_of_target_Records=tgt_cnt,
+        #              Number_of_failed_Records=diff,
+        #              column=row['key_col_list'],
+        #              Status='FAIL',
+        #              source_type=row['source_type'],
+        #              target_type=row['target_type'],
+        #              Out=Out)
     else:
         print("Duplicates not present")
     print("duplicate check validation ended")
@@ -167,6 +204,34 @@ def name_check(target, column):
         pass
     else:
         pass
+
+def check_range(target, column, min_val, max_val):
+    invalid_count = target.filter((col(column) < min_val) | (col(column) > max_val)).count()
+    return invalid_count == 0
+
+def date_check(target,dq_col):
+
+    def is_valid_date_format(date_str: str) -> bool:
+        try:
+            # Try to parse the string in the format 'dd-mm-yyyy'
+            datetime.strptime(date_str, "%d-%m-%Y")
+            return True
+        except ValueError:
+            return False
+
+    date_format_udf = udf(is_valid_date_format, BooleanType())
+
+
+    df_with_validation = target.withColumn("is_valid_format", date_format_udf(col("date"))).filter('is_valid_format = False')
+
+    failed =df_with_validation.count()
+    if failed>0:
+        print("fail")
+    else:
+        print('pass')
+
+
+
 
 
 

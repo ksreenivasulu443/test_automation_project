@@ -5,7 +5,7 @@ import os
 
 from utility.read_lib import read_file, read_snowflake, read_db
 from utility.validation_lib import count_check, duplicate_check, uniqueness_check, null_value_check, \
-    records_present_only_in_target, records_present_only_in_source, data_compare, schema_check, name_check
+    records_present_only_in_target, records_present_only_in_source, data_compare, schema_check, name_check, check_range
 
 # Jars setup
 project_path = os.getcwd()
@@ -22,6 +22,11 @@ spark = SparkSession.builder.master("local[1]") \
     .config("spark.executor.extraClassPath", jars) \
     .config("spark.jars.packages", "org.apache.spark:spark-avro_2.12:3.4.0") \
     .getOrCreate()
+
+pd.set_option('display.max_rows', 50)
+
+# Display up to 20 columns
+pd.set_option('display.max_columns', 20)
 
 Out = {
     "validation_Type": [],
@@ -111,7 +116,7 @@ for row in testcases:
     print("validations", row['validation_Type'])
     for validation in row['validation_Type']:
         if validation == 'count_check':
-            count_check(source=source, target=target)
+            count_check(source=source, target=target,row=row,Out=Out)
         elif validation == 'duplicate':
             duplicate_check(target=target, key_cols=row['key_col_list'])
         elif validation == 'uniqueness_check':
@@ -128,3 +133,13 @@ for row in testcases:
             schema_check(source=source, target=target, spark=spark)
         elif validation == 'name_check':
             name_check(target=target, column=row['dq_column'])
+        elif validation == 'check_range':
+            check_range(target=target,column=row['dq_column'],min_val=row['min_val'], max_val=row['max_value'])
+
+print(Out)
+
+summary = pd.DataFrame(Out)
+
+print(summary.head())
+
+summary.to_csv("summary.csv")
