@@ -9,25 +9,22 @@ from utility.validation_lib import count_check, duplicate_check, uniqueness_chec
 
 # Jars setup
 project_path = os.getcwd()
-snow_jar = project_path + "\jar\snowflake-jdbc-3.14.3.jar"
-postgres_jar = project_path + "\jar\postgresql-42.2.5.jar"
+# snow_jar = project_path + "\jar\snowflake-jdbc-3.14.3.jar"
+# postgres_jar = project_path + "\jar\postgresql-42.2.5.jar"
 
-jars = snow_jar + ',' + postgres_jar
+# jars = snow_jar + ',' + postgres_jar
 
 # Spark Session
-spark = (SparkSession.builder.master("local[1]") \
+spark = SparkSession.builder.master("local[1]") \
     .appName("test") \
-    .config("spark.jars", jars) \
-    .config("spark.driver.extraClassPath", jars) \
-    .config("spark.executor.extraClassPath", jars) \
-    .getOrCreate())
+    .getOrCreate()
     # .config("spark.jars.packages", "org.apache.spark:spark-avro_2.12:3.4.0") \
 
 
-pd.set_option('display.max_rows', 50)
-
-# Display up to 20 columns
-pd.set_option('display.max_columns', 20)
+# pd.set_option('display.max_rows', 50)
+#
+# # Display up to 20 columns
+# pd.set_option('display.max_columns', 20)
 
 Out = {
     "validation_Type": [],
