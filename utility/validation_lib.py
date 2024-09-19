@@ -1,9 +1,10 @@
-from pyspark.sql.functions import udf,col, regexp_extract,upper, isnan, when, trim, count,lit,sha2,concat
+from pyspark.sql.functions import udf, col, regexp_extract, upper, isnan, when, trim, count, lit, sha2, concat
 from pyspark.sql.types import BooleanType
 from datetime import datetime
 from utility.report_lib import write_output
 
-def count_check(source, target,row,Out):
+
+def count_check(source, target, row, Out):
     print("*" * 40)
     print("count check validation started")
     src_cnt = source.count()
@@ -39,56 +40,92 @@ def count_check(source, target,row,Out):
                      target_type=row['target_type'],
                      Out=Out)
 
-
     print("*" * 40)
     print("count check validation ended")
 
 
-def duplicate_check(target, key_cols,row,Out):
+def duplicate_check(target, key_cols, row, Out):
     print("*" * 40)
     print("duplicate check validation started")
     key_cols_list = key_cols.split(',')
+    tgt_cnt = target.count()
     duplicate_df = target.groupBy(key_cols_list).count().filter('count>1')
+    failed_ccount = duplicate_df.count()
     duplicate_df.show()
     fail_count = duplicate_df.count()
     if fail_count > 0:
         print("Duplicates present")
-        # write_output(validation_Type=row['validation_Type'],
-        #              source=row['source'],
-        #              target=row['target'],
-        #              Number_of_source_Records=src_cnt,
-        #              Number_of_target_Records=tgt_cnt,
-        #              Number_of_failed_Records=diff,
-        #              column=row['key_col_list'],
-        #              Status='FAIL',
-        #              source_type=row['source_type'],
-        #              target_type=row['target_type'],
-        #              Out=Out)
+        write_output(validation_Type=row['validation_Type'],
+                     source=row['source'],
+                     target=row['target'],
+                     Number_of_source_Records='NOT APPL',
+                     Number_of_target_Records=tgt_cnt,
+                     Number_of_failed_Records=failed_ccount,
+                     column=row['key_col_list'],
+                     Status='FAIL',
+                     source_type=row['source_type'],
+                     target_type=row['target_type'],
+                     Out=Out)
     else:
         print("Duplicates not present")
+        write_output(validation_Type=row['validation_Type'],
+                     source=row['source'],
+                     target=row['target'],
+                     Number_of_source_Records="NOT APPL",
+                     Number_of_target_Records=tgt_cnt,
+                     Number_of_failed_Records=fail_count,
+                     column=row['key_col_list'],
+                     Status='PASS',
+                     source_type=row['source_type'],
+                     target_type=row['target_type'],
+                     Out=Out)
     print("duplicate check validation ended")
     print("*" * 40)
 
 
-def uniqueness_check(target, unique_col):
+def uniqueness_check(target, unique_col, row, Out):
     print("*" * 40)
     print("Uniqueness check validation started")
     unique_col_list = unique_col.split(',')
+    tgt_cnt = target.count()
     for column in unique_col_list:
         duplicate_df = target.groupBy(column).count().filter('count>1')
         duplicate_df.show()
         fail_count = duplicate_df.count()
         if fail_count > 0:
             print("Duplicates present in ", column)
+            write_output(validation_Type=row['validation_Type'],
+                         source=row['source'],
+                         target=row['target'],
+                         Number_of_source_Records='NOT APPL',
+                         Number_of_target_Records=tgt_cnt,
+                         Number_of_failed_Records=fail_count,
+                         column=column,
+                         Status='FAIL',
+                         source_type=row['source_type'],
+                         target_type=row['target_type'],
+                         Out=Out)
         else:
             print("Duplicates not present in ", column)
+            write_output(validation_Type=row['validation_Type'],
+                         source=row['source'],
+                         target=row['target'],
+                         Number_of_source_Records="NOT APPL",
+                         Number_of_target_Records=tgt_cnt,
+                         Number_of_failed_Records=fail_count,
+                         column=column,
+                         Status='PASS',
+                         source_type=row['source_type'],
+                         target_type=row['target_type'],
+                         Out=Out)
 
     print("Uniqueness check validation ended")
     print("*" * 40)
 
 
-def null_value_check(target, null_cols):
+def null_value_check(target, null_cols, row, Out):
     null_columns_list = null_cols.split(",")
+    tgt_cnt = target.count()
     for column in null_columns_list:
         Null_df = target.select(
             count(
@@ -108,50 +145,120 @@ def null_value_check(target, null_cols):
         fail_count = Null_df.collect()[0][0]
         if fail_count > 0:
             print("Null present ", column)
+            write_output(validation_Type=row['validation_Type'],
+                         source=row['source'],
+                         target=row['target'],
+                         Number_of_source_Records='NOT APPL',
+                         Number_of_target_Records=tgt_cnt,
+                         Number_of_failed_Records=fail_count,
+                         column=column,
+                         Status='FAIL',
+                         source_type=row['source_type'],
+                         target_type=row['target_type'],
+                         Out=Out)
         else:
             print("Null not present in ", column)
+            write_output(validation_Type=row['validation_Type'],
+                         source=row['source'],
+                         target=row['target'],
+                         Number_of_source_Records="NOT APPL",
+                         Number_of_target_Records=tgt_cnt,
+                         Number_of_failed_Records=fail_count,
+                         column=column,
+                         Status='PASS',
+                         source_type=row['source_type'],
+                         target_type=row['target_type'],
+                         Out=Out)
 
-def records_present_only_in_target(source, target, keyList):
+
+def records_present_only_in_target(source, target, keyList, row, Out):
     keyList = keyList.split(",")
+    src_cnt = source.count()
+    tgt_cnt = target.count()
     tms = target.select(keyList).exceptAll(source.select(keyList))
-    failed = tms.count()
-    print("records_present_only_in_target and not source :" , failed)
+    fail_count = tms.count()
+    print("records_present_only_in_target and not source :", fail_count)
     tms.show()
+    if fail_count > 0:
+        write_output(validation_Type=row['validation_Type'],
+                     source=row['source'],
+                     target=row['target'],
+                     Number_of_source_Records=src_cnt,
+                     Number_of_target_Records=tgt_cnt,
+                     Number_of_failed_Records=fail_count,
+                     column=row['key_col_list'],
+                     Status='FAIL',
+                     source_type=row['source_type'],
+                     target_type=row['target_type'],
+                     Out=Out)
+
+    else:
+        write_output(validation_Type=row['validation_Type'],
+                     source=row['source'],
+                     target=row['target'],
+                     Number_of_source_Records=src_cnt,
+                     Number_of_target_Records=tgt_cnt,
+                     Number_of_failed_Records=fail_count,
+                     column=row['key_col_list'],
+                     Status='PASS',
+                     source_type=row['source_type'],
+                     target_type=row['target_type'],
+                     Out=Out)
 
 
-def records_present_only_in_source(source, target, keyList):
+def records_present_only_in_source(source, target, keyList, row, Out):
     keyList = keyList.split(",")
     smt = source.select(keyList).exceptAll(target.select(keyList))
     failed = smt.count()
-    print("records_present_only_in_source not in target :" ,failed)
+    print("records_present_only_in_source not in target :", failed)
     smt.show()
 
-def data_compare(source, target, keycolumn):
+
+def data_compare(source, target, keycolumn, row, Out):
     keycolumn = keycolumn.split(",")
     keycolumn = [i.lower() for i in keycolumn]
-
+    src_cnt = source.count()
+    tgt_cnt = target.count()
     columnList = source.columns
     smt = source.exceptAll(target).withColumn("datafrom", lit("source"))
     tms = target.exceptAll(source).withColumn("datafrom", lit("target"))
     failed = smt.union(tms)
     failed.show()
 
-
     failed_count = failed.count()
-    target_count = target.count()
-    source_count = source.count()
     if failed_count > 0:
-        pass
+        write_output(validation_Type=row['validation_Type'],
+                     source=row['source'],
+                     target=row['target'],
+                     Number_of_source_Records=src_cnt,
+                     Number_of_target_Records=tgt_cnt,
+                     Number_of_failed_Records=failed_count,
+                     column=row['key_col_list'],
+                     Status='FAIL',
+                     source_type=row['source_type'],
+                     target_type=row['target_type'],
+                     Out=Out)
     else:
-        pass
+        write_output(validation_Type=row['validation_Type'],
+                     source=row['source'],
+                     target=row['target'],
+                     Number_of_source_Records=src_cnt,
+                     Number_of_target_Records=tgt_cnt,
+                     Number_of_failed_Records=failed_count,
+                     column=row['key_col_list'],
+                     Status='PASS',
+                     source_type=row['source_type'],
+                     target_type=row['target_type'],
+                     Out=Out)
 
     if failed.count() > 0:
 
-        failed2 = failed.select(keycolumn).distinct().withColumn("hash_key",sha2(concat(*[col(c) for c in keycolumn]), 256))
-        source = source.withColumn("hash_key", sha2(concat(*[col(c) for c in keycolumn]), 256)).\
-            join(failed2,["hash_key"],how='left_semi').drop('hash_key')
+        failed2 = failed.select(keycolumn).distinct().withColumn("hash_key",
+                                                                 sha2(concat(*[col(c) for c in keycolumn]), 256))
+        source = source.withColumn("hash_key", sha2(concat(*[col(c) for c in keycolumn]), 256)). \
+            join(failed2, ["hash_key"], how='left_semi').drop('hash_key')
         target = target.withColumn("hash_key", sha2(concat(*[col(c) for c in keycolumn]), 256)). \
-        join(failed2,["hash_key"],how='left_semi').drop('hash_key')
+            join(failed2, ["hash_key"], how='left_semi').drop('hash_key')
 
         print("columnList", columnList)
         print("keycolumns", keycolumn)
@@ -168,8 +275,8 @@ def data_compare(source, target, keycolumn):
                                                         "True").otherwise("False")).filter(
                     f"comparison == False and source_{column} is not null and target_{column} is not null").show()
 
-def schema_check(source, target, spark):
 
+def schema_check(source, target, spark):
     source.createOrReplaceTempView("source")
     target.createOrReplaceTempView("target")
     source_schema = spark.sql("describe source")
@@ -190,6 +297,7 @@ def schema_check(source, target, spark):
     else:
         pass
 
+
 def name_check(target, column):
     pattern = "^[a-zA-Z]"
 
@@ -205,12 +313,13 @@ def name_check(target, column):
     else:
         pass
 
+
 def check_range(target, column, min_val, max_val):
     invalid_count = target.filter((col(column) < min_val) | (col(column) > max_val)).count()
     return invalid_count == 0
 
-def date_check(target,dq_col):
 
+def date_check(target, dq_col):
     def is_valid_date_format(date_str: str) -> bool:
         try:
             # Try to parse the string in the format 'dd-mm-yyyy'
@@ -221,18 +330,11 @@ def date_check(target,dq_col):
 
     date_format_udf = udf(is_valid_date_format, BooleanType())
 
+    df_with_validation = target.withColumn("is_valid_format", date_format_udf(col("date"))).filter(
+        'is_valid_format = False')
 
-    df_with_validation = target.withColumn("is_valid_format", date_format_udf(col("date"))).filter('is_valid_format = False')
-
-    failed =df_with_validation.count()
-    if failed>0:
+    failed = df_with_validation.count()
+    if failed > 0:
         print("fail")
     else:
         print('pass')
-
-
-
-
-
-
-
