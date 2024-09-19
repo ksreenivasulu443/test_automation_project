@@ -15,13 +15,14 @@ postgres_jar = project_path + "\jar\postgresql-42.2.5.jar"
 jars = snow_jar + ',' + postgres_jar
 
 # Spark Session
-spark = SparkSession.builder.master("local[1]") \
+spark = (SparkSession.builder.master("local[1]") \
     .appName("test") \
     .config("spark.jars", jars) \
     .config("spark.driver.extraClassPath", jars) \
     .config("spark.executor.extraClassPath", jars) \
-    .config("spark.jars.packages", "org.apache.spark:spark-avro_2.12:3.4.0") \
-    .getOrCreate()
+    .getOrCreate())
+    # .config("spark.jars.packages", "org.apache.spark:spark-avro_2.12:3.4.0") \
+
 
 pd.set_option('display.max_rows', 50)
 
