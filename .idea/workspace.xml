@@ -361,7 +361,23 @@
       <option name="project" value="LOCAL" />
       <updated>1726715518401</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Feat: Added github workflow">
+      <option name="closed" value="true" />
+      <created>1726715831379</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1726715831379</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Feat: Added github workflow">
+      <option name="closed" value="true" />
+      <created>1726715906930</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1726715906930</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
