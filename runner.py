@@ -26,6 +26,7 @@ spark = SparkSession.builder.master("local[1]") \
 # # Display up to 20 columns
 # pd.set_option('display.max_columns', 20)
 
+
 Out = {
     "validation_Type": [],
     "Source_name": [],
