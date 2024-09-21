@@ -116,17 +116,17 @@ for row in testcases:
         if validation == 'count_check':
             count_check(source=source, target=target,row=row,Out=Out)
         elif validation == 'duplicate':
-            duplicate_check(target=target, key_cols=row['key_col_list'])
+            duplicate_check(target=target, key_cols=row['key_col_list'],row=row,Out=Out)
         elif validation == 'uniqueness_check':
-            uniqueness_check(target=target, unique_col=row['unique_col_list'])
+            uniqueness_check(target=target, unique_col=row['unique_col_list'],row=row,Out=Out)
         elif validation == 'null_value_check':
-            null_value_check(target=target, null_cols=row['null_col_list'])
+            null_value_check(target=target, null_cols=row['null_col_list'],row=row,Out=Out)
         elif validation == 'records_present_only_target':
-            records_present_only_in_target(source=source, target=target, keyList=row['key_col_list'])
+            records_present_only_in_target(source=source, target=target, keyList=row['key_col_list'],row=row,Out=Out)
         elif validation == 'records_present_only_in_source':
-            records_present_only_in_source(source=source, target=target, keyList=row['key_col_list'])
+            records_present_only_in_source(source=source, target=target, keyList=row['key_col_list'],row=row,Out=Out)
         elif validation == 'data_compare':
-            data_compare(source=source, target=target, keycolumn=row['key_col_list'])
+            data_compare(source=source, target=target, keycolumn=row['key_col_list'],row=row,Out=Out)
         elif validation == 'schema_check':
             schema_check(source=source, target=target, spark=spark)
         elif validation == 'name_check':
