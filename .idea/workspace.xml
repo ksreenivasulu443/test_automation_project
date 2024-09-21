@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="09255fa2-d8ac-4ef0-9cc1-e50a090296db" name="Changes" comment="Feat: Added github workflow" />
+    <list default="true" id="09255fa2-d8ac-4ef0-9cc1-e50a090296db" name="Changes" comment="Feat: Added github workflow">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -393,7 +395,23 @@
       <option name="project" value="LOCAL" />
       <updated>1726715992791</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Feat: Added github workflow">
+      <option name="closed" value="true" />
+      <created>1726716444134</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1726716444134</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Feat: Added github workflow">
+      <option name="closed" value="true" />
+      <created>1726716562620</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1726716562620</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
