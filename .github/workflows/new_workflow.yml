@@ -3,22 +3,22 @@
 
 name: Manual automation execution #Name: This is the name of your workflow, which helps identify it within your repository.
 
-#on: on: Specifies the events that trigger the workflow. For example, it could trigger on pushes to specific branches, pull requests, scheduled events, or manual triggers.
-#  push:
-#    branches: [ "master" ]
-#  pull_request:
-#    branches: [ "master" ]
+on: #on: Specifies the events that trigger the workflow. For example, it could trigger on pushes to specific branches, pull requests, scheduled events, or manual triggers.
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
-on:
-  workflow_dispatch:
-    inputs:
-      environment:
-        type: choice
-        options:
-          - dev
-          - qa
-          - prod
-        description: Deployment environment
+#on:
+#  workflow_dispatch:
+#    inputs:
+#      environment:
+#        type: choice
+#        options:
+#          - dev
+#          - qa
+#          - prod
+#        description: Deployment environment
 
 permissions:
   contents: read
