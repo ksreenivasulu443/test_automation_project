@@ -2,22 +2,11 @@
 
 name: Manual automation execution
 
-#on:
-#  push:
-#    branches: [ "master" ]
-#  pull_request:
-#    branches: [ "master" ]
-
 on:
-  workflow_dispatch:
-    inputs:
-      environment:
-        type: choice
-        options:
-          - dev
-          - qa
-          - prod
-        description: Deployment environment
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 permissions:
   contents: read
