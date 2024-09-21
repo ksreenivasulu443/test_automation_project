@@ -25,7 +25,7 @@ permissions:
 #jobs: Defines the individual jobs that make up the workflow. Each job consists of one or more steps.
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps: #steps: Contains a sequence of tasks to be executed in the job. Each step typically represents a command or action to be performed.
     - uses: actions/checkout@v3
