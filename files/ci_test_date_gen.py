@@ -72,18 +72,18 @@ def create_csv_file(positive_data_list, negative_data_list):
     # Generate file name in ddmmyyyy format
     file_name = f"Contact_info_{datetime.now().strftime('%d%m%Y')}.csv"
 
-    # Define output path
-    output_dir = r"C:\Users\A4952\PycharmProjects\test_automation_project\files"
-    output_path = os.path.join(output_dir, file_name)
+    # # Define output path
+    # output_dir = os.getcwd()
+    # output_path = os.path.join(output_dir, file_name)
 
     # Write to CSV
-    with open(output_path, mode='w', newline='') as file:
+    with open(file_name, mode='w', newline='') as file:
         writer = csv.DictWriter(file, fieldnames=headers)
         writer.writeheader()
         for row in combined_data:
             writer.writerow(row)
 
-    print(f"CSV file '{file_name}' created successfully at '{output_path}'!")
+    print(f"CSV file '{file_name}' created successfully at '{file_name}'!")
 
 
 # Function to generate both positive and negative data based on input number of records
