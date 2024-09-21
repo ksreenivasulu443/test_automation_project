@@ -211,7 +211,34 @@ def records_present_only_in_source(source, target, keyList, row, Out):
     smt = source.select(keyList).exceptAll(target.select(keyList))
     failed = smt.count()
     print("records_present_only_in_source not in target :", failed)
+    src_cnt = source.count()
+    tgt_cnt=target.count()
     smt.show()
+    if failed > 0:
+        write_output(validation_Type=row['validation_Type'],
+                     source=row['source'],
+                     target=row['target'],
+                     Number_of_source_Records=src_cnt,
+                     Number_of_target_Records=tgt_cnt,
+                     Number_of_failed_Records=failed,
+                     column=row['key_col_list'],
+                     Status='FAIL',
+                     source_type=row['source_type'],
+                     target_type=row['target_type'],
+                     Out=Out)
+
+    else:
+        write_output(validation_Type=row['validation_Type'],
+                     source=row['source'],
+                     target=row['target'],
+                     Number_of_source_Records=src_cnt,
+                     Number_of_target_Records=tgt_cnt,
+                     Number_of_failed_Records=failed,
+                     column=row['key_col_list'],
+                     Status='PASS',
+                     source_type=row['source_type'],
+                     target_type=row['target_type'],
+                     Out=Out)
 
 
 def data_compare(source, target, keycolumn, row, Out):
@@ -276,7 +303,7 @@ def data_compare(source, target, keycolumn, row, Out):
                     f"comparison == False and source_{column} is not null and target_{column} is not null").show()
 
 
-def schema_check(source, target, spark):
+def schema_check(source, target, spark,row, Out):
     source.createOrReplaceTempView("source")
     target.createOrReplaceTempView("target")
     source_schema = spark.sql("describe source")
@@ -289,13 +316,33 @@ def schema_check(source, target, spark):
     case when a.data_type=b.data_type then "pass" else "fail" end status
     from source_schema a full join target_schema b on lower(a.col_name)=lower(b.col_name)) where status='fail' ''')
     source_count = source_schema.count()
-    target_count = target_schema.count()
+    source_count = target_schema.count()
     failed_count = failed.count()
     failed.show()
     if failed_count > 0:
-        pass
+        write_output(validation_Type=row['validation_Type'],
+                     source=row['source'],
+                     target=row['target'],
+                     Number_of_source_Records=source_count,
+                     Number_of_target_Records=source_count,
+                     Number_of_failed_Records=failed_count,
+                     column=row['key_col_list'],
+                     Status='FAIL',
+                     source_type=row['source_type'],
+                     target_type=row['target_type'],
+                     Out=Out)
     else:
-        pass
+        write_output(validation_Type=row['validation_Type'],
+                     source=row['source'],
+                     target=row['target'],
+                     Number_of_source_Records=source_count,
+                     Number_of_target_Records=source_count,
+                     Number_of_failed_Records=failed_count,
+                     column=row['key_col_list'],
+                     Status='PASS',
+                     source_type=row['source_type'],
+                     target_type=row['target_type'],
+                     Out=Out)
 
 
 def name_check(target, column):
