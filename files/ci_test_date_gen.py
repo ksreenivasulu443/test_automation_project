@@ -73,8 +73,8 @@ def create_csv_file(positive_data_list, negative_data_list):
     file_name = f"Contact_info_{datetime.now().strftime('%d%m%Y')}.csv"
 
     # # Define output path
-    # output_dir = os.getcwd()
-    # output_path = os.path.join(output_dir, file_name)
+    output_dir = os.getcwd()
+    output_path = os.path.join(output_dir, file_name)
 
     # Write to CSV
     with open(file_name, mode='w', newline='') as file:
@@ -83,7 +83,7 @@ def create_csv_file(positive_data_list, negative_data_list):
         for row in combined_data:
             writer.writerow(row)
 
-    print(f"CSV file '{file_name}' created successfully at '{file_name}'!")
+    print(f"CSV file '{file_name}' created successfully at '{output_path}'!")
 
 
 # Function to generate both positive and negative data based on input number of records
