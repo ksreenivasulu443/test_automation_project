@@ -1,11 +1,11 @@
-,validation_Type,Source_name,target_name,Number_of_source_Records,Number_of_target_Records,Number_of_failed_Records,column,Status,source_type,target_type
-0,data_compare,Contact_info_21092024.csv,Contact_info_t.csv,100000,12,100012,identifier,FAIL,csv,csv
-1,count_check,Contact_info_21092024.csv,Contact_info_t.csv,100000,12,99988,identifier,FAIL,csv,csv
+,validation_Type,source,target,number_of_source_Records,number_of_target_Records,number_of_failed_Records,column,status,source_type,target_type
+0,data_compare,Contact_info_21092024.csv,Contact_info_t.csv,100,12,112,identifier,FAIL,csv,csv
+1,count_check,Contact_info_21092024.csv,Contact_info_t.csv,100,12,88,identifier,FAIL,csv,csv
 2,null_value_check,Contact_info_21092024.csv,Contact_info_t.csv,NOT APPL,12,0,Surname,PASS,csv,csv
 3,null_value_check,Contact_info_21092024.csv,Contact_info_t.csv,NOT APPL,12,12,middle_initial,FAIL,csv,csv
 4,uniqueness_check,Contact_info_21092024.csv,Contact_info_t.csv,NOT APPL,12,0,identifier,PASS,csv,csv
 5,uniqueness_check,Contact_info_21092024.csv,Contact_info_t.csv,NOT APPL,12,2,surname,FAIL,csv,csv
 6,uniqueness_check,Contact_info_21092024.csv,Contact_info_t.csv,NOT APPL,12,1,given_name,FAIL,csv,csv
 7,duplicate,Contact_info_21092024.csv,Contact_info_t.csv,NOT APPL,12,0,identifier,PASS,csv,csv
-8,records_present_only_in_source,Contact_info_21092024.csv,Contact_info_t.csv,100000,12,100000,identifier,FAIL,csv,csv
-9,records_present_only_target,Contact_info_21092024.csv,Contact_info_t.csv,100000,12,12,identifier,FAIL,csv,csv
+8,records_present_only_in_source,Contact_info_21092024.csv,Contact_info_t.csv,100,12,100,identifier,FAIL,csv,csv
+9,records_present_only_target,Contact_info_21092024.csv,Contact_info_t.csv,100,12,12,identifier,FAIL,csv,csv
