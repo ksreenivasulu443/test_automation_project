@@ -300,7 +300,7 @@ def data_compare(source, target, keycolumn, row, Out,validation):
                 temp_join = temp_source.join(temp_target, keycolumn, how='full_outer')
                 temp_join.withColumn("comparison", when(col('source_' + column) == col("target_" + column),
                                                         "True").otherwise("False")).filter(
-                    f"comparison == False and source_{column} is not null and target_{column} is not null").show()
+                    f"comparison == False ").show()
 
 
 def schema_check(source, target, spark,row, Out,validation):
