@@ -2,19 +2,35 @@ import pandas as pd
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import collect_set
 import os
+import getpass
+import datetime
 
 from pyspark.sql.types import StructType, StructField, StringType
 from utility.read_lib import read_file, read_snowflake, read_db
 from utility.validation_lib import count_check, duplicate_check, uniqueness_check, null_value_check, \
     records_present_only_in_target, records_present_only_in_source, data_compare, schema_check, name_check, check_range
 from pyspark.sql.functions import udf, col, regexp_extract, upper, isnan, when, trim, count, lit, sha2, concat
-
+import sys
 # Jars setup
 project_path = os.getcwd()
+
+cwd = os.getcwd()
+batch_id = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+result_local_file = cwd+'\Execution_detailed_summary_'+batch_id+'.txt'
+print("result_local_file",result_local_file)
+
+if os.path.exists(result_local_file):
+    os.remove(result_local_file)
+
+file = open(result_local_file, 'a')
+original = sys.stdout
+sys.stdout = file
+
 snow_jar = project_path + "\jar\snowflake-jdbc-3.14.3.jar"
 postgres_jar = project_path + "\jar\postgresql-42.2.5.jar"
 
 jar_path = snow_jar + ',' + postgres_jar
+
 
 # Spark Session
 spark = SparkSession.builder.master("local[1]") \
@@ -137,7 +153,7 @@ for row in testcases:
             data_compare(source=source, target=target, keycolumn=row['key_col_list'], row=row, Out=Out,
                          validation=validation)
         elif validation == 'schema_check':
-            schema_check(source=source, target=target, spark=spark, validation=validation)
+            schema_check(source=source, target=target, spark=spark,row=row, Out=Out, validation=validation)
         elif validation == 'name_check':
             name_check(target=target, column=row['dq_column'])
         elif validation == 'check_range':
@@ -167,6 +183,8 @@ schema = StructType([
 # Convert Pandas DataFrame to Spark DataFrame
 summary = spark.createDataFrame(summary, schema=schema)
 
+summary.show()
+
 hash_cols = ['source', 'source_type', 'target', 'target_type','validation_Type']
 
 run_test_case.show()
@@ -177,5 +195,23 @@ summary = (summary.withColumn("hash_key", sha2(concat(*[col(c) for c in hash_col
 run_test_case = (run_test_case.withColumn("hash_key", sha2(concat(*[col(c) for c in hash_cols]), 256)))
 
 summary.show()
+final_result = run_test_case.join(summary, 'hash_key', how='left')
 
-run_test_case.join(summary, 'hash_key', how='left').show()
+system_user = getpass.getuser()
+
+
+final_result= final_result.withColumn('batch_date', lit(batch_id))\
+    .withColumn('create_user',lit(system_user))\
+    .withColumn('update_user',lit(system_user))
+
+final_result.show()
+
+url = "jdbc:snowflake://atjmorn-ht38363.snowflakecomputing.com/?user=KSREENIVASULU443&password=Dharmavaram1@&warehouse=COMPUTE_WH&db=SAMPLEDB&schema=CONTACT_INFO"
+
+
+final_result.write.mode("append") \
+    .format("jdbc") \
+    .option("driver", "net.snowflake.client.jdbc.SnowflakeDriver") \
+    .option("url", url) \
+    .option("dbtable", "SAMPLEDB.CONTACT_INFO.AUTOMATION_SUMMARY") \
+    .save()
