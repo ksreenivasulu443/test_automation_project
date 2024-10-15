@@ -1,0 +1,1 @@
+select * from yellow_taxi where batch_id = 202403
