@@ -35,6 +35,7 @@ def read_file(spark, path, type, schema_path, multiline):
     elif type == 'text':
         df = spark.read.format("text").load(path)
         return df
+
     elif type == 'adls':
         config = read_config('adls')
         adls_account_name = config['adls_account_name'] # Your ADLS account name
