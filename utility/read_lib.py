@@ -7,7 +7,10 @@ from utility.genereal_lib import flatten, read_config, fetch_transformation_quer
 
 
 def read_file(spark, path, type, schema_path, multiline):
-    path = fetch_file_path(path)
+    if type !='adls':
+        path = fetch_file_path(path)
+    else:
+        path =path
     if type == 'csv':
         if schema_path != 'NOT APPL':
             schema = read_schema(schema_path)
@@ -32,8 +35,22 @@ def read_file(spark, path, type, schema_path, multiline):
     elif type == 'text':
         df = spark.read.format("text").load(path)
         return df
-    elif type == 'orc':
-        pass
+    elif type == 'adls':
+        config = read_config('adls')
+        adls_account_name = config['adls_account_name'] # Your ADLS account name
+        adls_container_name = config["adls_container_name"]  # Your container name
+        key = config['key']
+        # Set Spark configuration for ADLS Gen2 using SharedKey authentication
+        spark.conf.set(f"fs.azure.account.auth.type.{adls_account_name}.dfs.core.windows.net", "SharedKey")
+        spark.conf.set(f"fs.azure.account.key.{adls_account_name}.dfs.core.windows.net", key)
+
+        adls_file_system_url = f"abfss://{adls_container_name}@{adls_account_name}.dfs.core.windows.net/"
+
+        # Path to ADLS directory where files are added monthly
+        adls_folder_path = f"{adls_file_system_url}{path}"
+        df = spark.read.parquet(adls_folder_path)
+        return df
+
     elif type == 'dat':
         pass
 
@@ -86,6 +103,3 @@ def read_db(spark, table, database, query_path):
             option("driver", config['driver']).load()
 
     return df
-
-def read_cosmos():
-    pass
