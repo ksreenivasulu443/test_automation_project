@@ -6,7 +6,7 @@
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
     </content>
     <content url="jar://$USER_HOME$/Documents/spark-3.5.3-bin-hadoop3/python/lib/py4j-0.10.9.7-src.zip!/" />
-    <orderEntry type="jdk" jdkName="Python 3.10 (test_automation_project1)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.10 (SEPT_AUTOMATION)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
