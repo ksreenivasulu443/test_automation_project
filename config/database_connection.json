@@ -19,13 +19,15 @@
   },
   "snowflake_db": {
     "driver": "net.snowflake.client.jdbc.SnowflakeDriver",
-    "jdbc_url" : "jdbc:snowflake://atjmorn-ht38363.snowflakecomputing.com/?user=KSREENIVASULU443&password=Dharmavaram1@&warehouse=COMPUTE_WH&db=SAMPLEDB&schema=CONTACT_INFO",
+    "jdbc_url": "jdbc:snowflake://atjmorn-ht38363.snowflakecomputing.com/?user=KSREENIVASULU443&password=Dharmavaram1@&warehouse=COMPUTE_WH&db=SAMPLEDB&schema=CONTACT_INFO"
+  },
 
   "adls":
   {
     "adls_account_name" : "juneauto",
     "adls_container_name" : "project1",
     "key" : "CBmVs+pWVKG5ClkNH8I2ooZN5ZTHBECr+Bmf2DQCV+Hj8py1Hfa51CcZ703YkIzKFHsKOsnIkdGZ+AStdaF/kQ=="
+
   }
-  }
+
 }
