@@ -38,6 +38,7 @@ def read_file(spark, path, type, schema_path, multiline):
 
     elif type == 'adls':
         config = read_config('adls')
+        print("config", config)
         adls_account_name = config['adls_account_name'] # Your ADLS account name
         adls_container_name = config["adls_container_name"]  # Your container name
         key = config['key']
@@ -49,6 +50,7 @@ def read_file(spark, path, type, schema_path, multiline):
 
         # Path to ADLS directory where files are added monthly
         adls_folder_path = f"{adls_file_system_url}{path}"
+        print("adls path", adls_folder_path)
         df = spark.read.parquet(adls_folder_path)
         return df
 

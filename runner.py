@@ -16,7 +16,7 @@ project_path = os.getcwd()
 
 cwd = os.getcwd()
 batch_id = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-result_local_file = cwd+'\Execution_detailed_summary_'+batch_id+'.txt'
+result_local_file = cwd+'/Execution_detailed_summary_'+batch_id+'.txt'
 print("result_local_file",result_local_file)
 
 if os.path.exists(result_local_file):
@@ -26,10 +26,11 @@ file = open(result_local_file, 'a')
 original = sys.stdout
 sys.stdout = file
 
-snow_jar = project_path + "\jar\snowflake-jdbc-3.14.3.jar"
-postgres_jar = project_path + "\jar\postgresql-42.2.5.jar"
-
-jar_path = snow_jar + ',' + postgres_jar
+snow_jar = '/Users/admin/PycharmProjects/test_automation_project/jar/snowflake-jdbc-3.14.3.jar'
+postgres_jar = '/Users/admin/PycharmProjects/test_automation_project/jar/postgresql-42.2.5.jar'
+azure_storage = '/Users/admin/PycharmProjects/test_automation_project/jar/azure-storage-8.6.6.jar'
+hadoop_azure = '/Users/admin/PycharmProjects/test_automation_project/jar/hadoop-azure-3.3.1.jar'
+jar_path = snow_jar + ',' + postgres_jar + ','+azure_storage + ',' + hadoop_azure
 
 
 # Spark Session
@@ -39,6 +40,7 @@ spark = SparkSession.builder.master("local[1]") \
     .config("spark.driver.extraClassPath", jar_path) \
     .config("spark.executor.extraClassPath", jar_path) \
     .getOrCreate()
+
 # .config("spark.jars.packages", "org.apache.spark:spark-avro_2.12:3.4.0") \
 
 
@@ -61,7 +63,7 @@ Out = {
     "target_type": []
 }
 
-test_case_file_path = project_path + '\config\Master_Test_Template.xlsx'
+test_case_file_path = project_path + '/config/Master_Test_Template.xlsx'
 # Test cases read
 test_cases = pd.read_excel(test_case_file_path)
 
@@ -129,9 +131,9 @@ for row in testcases:
                            schema_path=row['target_schema_path'],
                            multiline=row['target_json_multiline'])
 
-    source.show(truncate=False)  # expected(100,18)
+    source.show(n=10,truncate=False)  # expected(100,18)
     source.printSchema()
-    target.show(truncate=False)  # actual(99, 18 )
+    target.show(n=2,truncate=False)  # actual(99, 18 )
 
     print("validations", row['validation_Type'])
     for validation in row['validation_Type']:
