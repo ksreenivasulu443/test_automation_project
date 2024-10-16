@@ -48,14 +48,14 @@ def flatten(df):
     return df
 
 def read_config(database):
-    parent_path = os.path.dirname(given_path) + '\\config\\database_connection.json'
+    parent_path = os.path.dirname(given_path) + '/config/database_connection.json'
     # Read the JSON configuration file
     with open(parent_path) as f:
         config = json.load(f)[database]
     return config
 
 def fetch_transformation_query_path(sql_file_path):
-    path = os.path.dirname(given_path) + '\\transformation_queries\\' + sql_file_path
+    path = os.path.dirname(given_path) + '/transformation_queries/' + sql_file_path
     print("transformation_query_path",path)
     with open(path, "r") as file:
         sql_query = file.read()
@@ -63,7 +63,7 @@ def fetch_transformation_query_path(sql_file_path):
     return sql_query
 
 def read_schema(schema_file_name):
-    path = os.path.dirname(given_path) + '\\schema_files\\' +schema_file_name
+    path = os.path.dirname(given_path) + '/schema_files/' +schema_file_name
     # Read the JSON configuration file
     with open(path, 'r') as schema_file:
         schema = StructType.fromJson(json.load(schema_file))
