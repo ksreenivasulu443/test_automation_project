@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4aac2b4e-55d5-4824-afdf-371d148a49ae" name="Changes" comment="hi">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/transformation_queries/customer_scd1_expected_data_setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/transformation_queries/customer_scd1_expected_data_setup.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/transformation_queries/customer_scd2_expected_data_setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/transformation_queries/customer_scd2_expected_data_setup.py" afterDir="false" />
-    </list>
+    <list default="true" id="4aac2b4e-55d5-4824-afdf-371d148a49ae" name="Changes" comment="hi" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,6 +24,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -57,7 +54,6 @@
     "Python.runner.executor": "Run",
     "Python.test.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feature/adls__mac",
     "last_opened_file_path": "/Users/admin/PycharmProjects/test_automation_project/jar",
     "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable"
   }
