@@ -59,6 +59,8 @@ final_df.show()
 
 
 
+
+
 final_df.write.mode("append") \
                     .format("jdbc") \
                     .option("driver", "net.snowflake.client.jdbc.SnowflakeDriver") \

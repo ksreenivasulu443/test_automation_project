@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4aac2b4e-55d5-4824-afdf-371d148a49ae" name="Changes" comment="hi">
-      <change afterPath="$PROJECT_DIR$/transformation_queries/customer_scd1_expected_data_setup.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/transformation_queries/customer_scd2_expected_data_setup.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/Master_Test_Template.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/config/Master_Test_Template.xlsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/runner.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/summary.csv" beforeDir="false" afterPath="$PROJECT_DIR$/summary.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utility/genereal_lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/utility/genereal_lib.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utility/read_lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/utility/read_lib.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transformation_queries/customer_scd1_expected_data_setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/transformation_queries/customer_scd1_expected_data_setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/transformation_queries/customer_scd2_expected_data_setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/transformation_queries/customer_scd2_expected_data_setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +59,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "feature/adls__mac",
     "last_opened_file_path": "/Users/admin/PycharmProjects/test_automation_project/jar",
-    "settings.editor.selected.configurable": "com.intellij.pycharm.community.ide.impl.configuration.PythonContentEntriesConfigurable"
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -255,7 +250,31 @@
       <option name="project" value="LOCAL" />
       <updated>1729055932876</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="hi">
+      <option name="closed" value="true" />
+      <created>1729134279017</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1729134279017</updated>
+    </task>
+    <task id="LOCAL-00005" summary="hi">
+      <option name="closed" value="true" />
+      <created>1729134356832</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1729134356832</updated>
+    </task>
+    <task id="LOCAL-00006" summary="hi">
+      <option name="closed" value="true" />
+      <created>1729134622644</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1729134622644</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
