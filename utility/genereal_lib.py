@@ -1,3 +1,5 @@
+import subprocess
+
 from pyspark.sql.functions import col, explode_outer
 
 from pyspark.sql.types import ArrayType, StructType
@@ -61,6 +63,12 @@ def fetch_transformation_query_path(sql_file_path):
         sql_query = file.read()
 
     return sql_query
+
+def expected_data_setup(python_file_path):
+    path = os.path.dirname(given_path) + '/transformation_queries/' + python_file_path
+    if python_file_path.endswith('.py'):
+        subprocess.run(['python', path])
+
 
 def read_schema(schema_file_name):
     path = os.path.dirname(given_path) + '/schema_files/' +schema_file_name

@@ -1,2 +1,6 @@
 ,validation_Type,source,target,number_of_source_Records,number_of_target_Records,number_of_failed_Records,column,status,source_type,target_type
-0,count_check,master/yellowcabs/trip_data/202403,yellow_taxi,3582628,318,3582310,id,FAIL,adls,snowflake
+0,data_compare,CUSTOMER_HIST_EXPECTED,CUSTOMER_HIST,3,3,0,CUSTOMER_ID,PASS,snowflake,snowflake
+1,count_check,CUSTOMER_HIST_EXPECTED,CUSTOMER_HIST,3,3,0,CUSTOMER_ID,PASS,snowflake,snowflake
+2,schema_check,CUSTOMER_HIST_EXPECTED,CUSTOMER_HIST,6,6,0,CUSTOMER_ID,PASS,snowflake,snowflake
+3,uniqueness_check,CUSTOMER_HIST_EXPECTED,CUSTOMER_HIST,NOT APPL,3,0,CUSTOMER_ID,PASS,snowflake,snowflake
+4,null_value_check,CUSTOMER_HIST_EXPECTED,CUSTOMER_HIST,NOT APPL,3,0,CUSTOMER_ID,PASS,snowflake,snowflake

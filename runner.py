@@ -16,15 +16,15 @@ project_path = os.getcwd()
 
 cwd = os.getcwd()
 batch_id = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
-result_local_file = cwd+'/Execution_detailed_summary_'+batch_id+'.txt'
-print("result_local_file",result_local_file)
+# result_local_file = cwd+'/Execution_detailed_summary_'+batch_id+'.txt'
+# print("result_local_file",result_local_file)
+#
+# if os.path.exists(result_local_file):
+#     os.remove(result_local_file)
 
-if os.path.exists(result_local_file):
-    os.remove(result_local_file)
-
-file = open(result_local_file, 'a')
-original = sys.stdout
-sys.stdout = file
+# file = open(result_local_file, 'a')
+# original = sys.stdout
+# sys.stdout = file
 
 snow_jar = '/Users/admin/PycharmProjects/test_automation_project/jar/snowflake-jdbc-3.14.3.jar'
 postgres_jar = '/Users/admin/PycharmProjects/test_automation_project/jar/postgresql-42.2.5.jar'
@@ -100,40 +100,39 @@ for row in testcases:
         source = read_snowflake(spark=spark,
                                 table=row['source'],
                                 database=row['source_db_name'],
-                                query_path=row['source_transformation_query_path'])
+                                query_path=row['source_transformation_query_path'],row=row)
     elif row['source_type'] == 'table':
         source = read_db(spark=spark,
                          table=row['source'],
                          database=row['source_db_name'],
-                         query_path=row['source_transformation_query_path'])
+                         query_path=row['source_transformation_query_path'],row=row)
     else:
         source = read_file(spark=spark,
                            path=row['source'],
-                           type=row['source_type'],
+                           file_type=row['source_type'],
                            schema_path=row['source_schema_path'],
-                           multiline=row['source_json_multiline'])
+                           multiline=row['source_json_multiline'],row=row)
 
     if row['target_type'] == 'snowflake':
         target = read_snowflake(spark=spark,
                                 table=row['target'],
                                 database=row['target_db_name'],
-                                query_path=row['target_transformation_query_path'])
+                                query_path=row['target_transformation_query_path'],row=row)
 
     elif row['target_type'] == 'table':
         target = read_db(spark=spark,
                          table=row['target'],
                          database=row['target_db_name'],
-                         query_path=row['target_transformation_query_path'])
+                         query_path=row['target_transformation_query_path'],row=row)
     else:
         target = read_file(spark=spark,
                            path=row['target'],
-                           type=row['target_type'],
+                           file_type=row['target_type'],
                            schema_path=row['target_schema_path'],
-                           multiline=row['target_json_multiline'])
+                           multiline=row['target_json_multiline'],row=row)
 
-    source.show(n=10,truncate=False)  # expected(100,18)
-    source.printSchema()
-    target.show(n=2,truncate=False)  # actual(99, 18 )
+    source.show(n=5,truncate=False)  # expected(100,18)
+    target.show(n=5,truncate=False)  # actual(99, 18 )
 
     print("validations", row['validation_Type'])
     for validation in row['validation_Type']:
@@ -161,11 +160,11 @@ for row in testcases:
         elif validation == 'check_range':
             check_range(target=target, column=row['dq_column'], min_val=row['min_val'], max_val=row['max_value'])
 
-print(Out)
+#print(Out)
 
 summary = pd.DataFrame(Out)
 
-print(summary.head())
+#print(summary.head())
 
 summary.to_csv("summary.csv")
 
@@ -185,18 +184,18 @@ schema = StructType([
 # Convert Pandas DataFrame to Spark DataFrame
 summary = spark.createDataFrame(summary, schema=schema)
 
-summary.show()
+#summary.show()
 
 hash_cols = ['source', 'source_type', 'target', 'target_type','validation_Type']
 
-run_test_case.show()
-summary.show()
+#run_test_case.show()
+#summary.show()
 summary = (summary.withColumn("hash_key", sha2(concat(*[col(c) for c in hash_cols]), 256))
            .drop('validation_Type', 'source', 'target', 'source_type', 'target_type'))
 
 run_test_case = (run_test_case.withColumn("hash_key", sha2(concat(*[col(c) for c in hash_cols]), 256)))
 
-summary.show()
+#summary.show()
 final_result = run_test_case.join(summary, 'hash_key', how='left')
 
 system_user = getpass.getuser()
@@ -211,7 +210,7 @@ final_result.show()
 url = "jdbc:snowflake://atjmorn-ht38363.snowflakecomputing.com/?user=KSREENIVASULU443&password=Dharmavaram1@&warehouse=COMPUTE_WH&db=SAMPLEDB&schema=CONTACT_INFO"
 
 
-final_result.write.mode("append") \
+final_result.write.mode("overwrite") \
     .format("jdbc") \
     .option("driver", "net.snowflake.client.jdbc.SnowflakeDriver") \
     .option("url", url) \

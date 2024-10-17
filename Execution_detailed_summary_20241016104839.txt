@@ -1,0 +1,105 @@
+Ind==Y records
+  test_case_id validation_Type  ... min_val max_val
+8          FM9     count_check  ...     NaN     NaN
+
+[1 rows x 23 columns]
++----------------------------------+-----------+---------------------+--------------+------------------+--------------------------------+-----------+-----------+---------------------+--------------+------------------+--------------------------------+------------+-------------+---------------+---------------+---------+---------------+-------+-------+---------------+
+|source                            |source_type|source_json_multiline|source_db_name|source_schema_path|source_transformation_query_path|target     |target_type|target_json_multiline|target_db_name|target_schema_path|target_transformation_query_path|key_col_list|null_col_list|exclude_columns|unique_col_list|dq_column|expected_values|min_val|max_val|validation_Type|
++----------------------------------+-----------+---------------------+--------------+------------------+--------------------------------+-----------+-----------+---------------------+--------------+------------------+--------------------------------+------------+-------------+---------------+---------------+---------+---------------+-------+-------+---------------+
+|master/yellowcabs/trip_data/202403|adls       |NOT APPL             |adls          |NOT APPL          |NOT APPL                        |yellow_taxi|snowflake  |NOT APPL             |snowflake_db  |NOT APPL          |NOT APPL                        |id          |NaN          |NaN            |NaN            |NaN      |NaN            |NaN    |NaN    |[count_check]  |
++----------------------------------+-----------+---------------------+--------------+------------------+--------------------------------+-----------+-----------+---------------------+--------------+------------------+--------------------------------+------------+-------------+---------------+---------------+---------+---------------+-------+-------+---------------+
+
+testcases in list form [Row(source='master/yellowcabs/trip_data/202403', source_type='adls', source_json_multiline='NOT APPL', source_db_name='adls', source_schema_path='NOT APPL', source_transformation_query_path='NOT APPL', target='yellow_taxi', target_type='snowflake', target_json_multiline='NOT APPL', target_db_name='snowflake_db', target_schema_path='NOT APPL', target_transformation_query_path='NOT APPL', key_col_list='id', null_col_list=nan, exclude_columns=nan, unique_col_list=nan, dq_column=nan, expected_values=nan, min_val=nan, max_val=nan, validation_Type=['count_check'])]
+########################################
+source_file_path/table and type master/yellowcabs/trip_data/202403 adls
+target_file_path/table yellow_taxi snowflake
+source db name adls
+source trans query path NOT APPL
+config {'adls_account_name': 'juneauto', 'adls_container_name': 'project1', 'key': 'CBmVs+pWVKG5ClkNH8I2ooZN5ZTHBECr+Bmf2DQCV+Hj8py1Hfa51CcZ703YkIzKFHsKOsnIkdGZ+AStdaF/kQ=='}
+adls path abfss://project1@juneauto.dfs.core.windows.net/master/yellowcabs/trip_data/202403
++--------+--------------------+---------------------+---------------+-------------+----------+------------------+------------+------------+------------+-----------+-----+-------+----------+------------+---------------------+------------+--------------------+-----------+
+|VendorID|tpep_pickup_datetime|tpep_dropoff_datetime|passenger_count|trip_distance|RatecodeID|store_and_fwd_flag|PULocationID|DOLocationID|payment_type|fare_amount|extra|mta_tax|tip_amount|tolls_amount|improvement_surcharge|total_amount|congestion_surcharge|Airport_fee|
++--------+--------------------+---------------------+---------------+-------------+----------+------------------+------------+------------+------------+-----------+-----+-------+----------+------------+---------------------+------------+--------------------+-----------+
+|1       |2024-03-01 00:18:51 |2024-03-01 00:23:45  |0              |1.3          |1         |N                 |142         |239         |1           |8.6        |3.5  |0.5    |2.7       |0.0         |1.0                  |16.3        |2.5                 |0.0        |
+|1       |2024-03-01 00:26:00 |2024-03-01 00:29:06  |0              |1.1          |1         |N                 |238         |24          |1           |7.2        |3.5  |0.5    |3.0       |0.0         |1.0                  |15.2        |2.5                 |0.0        |
+|2       |2024-03-01 00:09:22 |2024-03-01 00:15:24  |1              |0.86         |1         |N                 |263         |75          |2           |7.9        |1.0  |0.5    |0.0       |0.0         |1.0                  |10.4        |0.0                 |0.0        |
+|2       |2024-03-01 00:33:45 |2024-03-01 00:39:34  |1              |0.82         |1         |N                 |164         |162         |1           |7.9        |1.0  |0.5    |1.29      |0.0         |1.0                  |14.19       |2.5                 |0.0        |
+|1       |2024-03-01 00:05:43 |2024-03-01 00:26:22  |0              |4.9          |1         |N                 |263         |7           |2           |25.4       |3.5  |0.5    |0.0       |0.0         |1.0                  |30.4        |2.5                 |0.0        |
+|2       |2024-03-01 00:50:42 |2024-03-01 01:10:40  |1              |5.04         |1         |N                 |238         |159         |2           |25.4       |1.0  |0.5    |0.0       |0.0         |1.0                  |27.9        |0.0                 |0.0        |
+|2       |2024-03-01 00:08:23 |2024-03-01 00:17:53  |1              |2.15         |1         |N                 |161         |141         |1           |12.1       |1.0  |0.5    |5.13      |0.0         |1.0                  |22.23       |2.5                 |0.0        |
+|2       |2024-03-01 00:24:58 |2024-03-01 00:30:31  |1              |1.1          |1         |N                 |236         |237         |1           |8.6        |1.0  |0.5    |2.04      |0.0         |1.0                  |15.64       |2.5                 |0.0        |
+|2       |2024-03-01 00:49:40 |2024-03-01 01:01:25  |1              |2.78         |1         |N                 |161         |114         |1           |14.9       |1.0  |0.5    |2.0       |0.0         |1.0                  |21.9        |2.5                 |0.0        |
+|1       |2024-03-01 00:21:43 |2024-03-01 00:24:44  |1              |0.3          |1         |N                 |237         |141         |2           |5.1        |3.5  |0.5    |0.0       |0.0         |1.0                  |10.1        |2.5                 |0.0        |
++--------+--------------------+---------------------+---------------+-------------+----------+------------------+------------+------------+------------+-----------+-----+-------+----------+------------+---------------------+------------+--------------------+-----------+
+only showing top 10 rows
+
+root
+ |-- VendorID: integer (nullable = true)
+ |-- tpep_pickup_datetime: timestamp_ntz (nullable = true)
+ |-- tpep_dropoff_datetime: timestamp_ntz (nullable = true)
+ |-- passenger_count: long (nullable = true)
+ |-- trip_distance: double (nullable = true)
+ |-- RatecodeID: long (nullable = true)
+ |-- store_and_fwd_flag: string (nullable = true)
+ |-- PULocationID: integer (nullable = true)
+ |-- DOLocationID: integer (nullable = true)
+ |-- payment_type: long (nullable = true)
+ |-- fare_amount: double (nullable = true)
+ |-- extra: double (nullable = true)
+ |-- mta_tax: double (nullable = true)
+ |-- tip_amount: double (nullable = true)
+ |-- tolls_amount: double (nullable = true)
+ |-- improvement_surcharge: double (nullable = true)
+ |-- total_amount: double (nullable = true)
+ |-- congestion_surcharge: double (nullable = true)
+ |-- Airport_fee: double (nullable = true)
+
++--------+-----------------------------+-----------------------------+---------------+-------------+----------+------------------+------------+------------+------------+-----------+-----+-------+----------+------------+---------------------+------------+--------------------+-----------+
+|VENDORID|TPEP_PICKUP_DATETIME         |TPEP_DROPOFF_DATETIME        |PASSENGER_COUNT|TRIP_DISTANCE|RATECODEID|STORE_AND_FWD_FLAG|PULOCATIONID|DOLOCATIONID|PAYMENT_TYPE|FARE_AMOUNT|EXTRA|MTA_TAX|TIP_AMOUNT|TOLLS_AMOUNT|IMPROVEMENT_SURCHARGE|TOTAL_AMOUNT|CONGESTION_SURCHARGE|AIRPORT_FEE|
++--------+-----------------------------+-----------------------------+---------------+-------------+----------+------------------+------------+------------+------------+-----------+-----+-------+----------+------------+---------------------+------------+--------------------+-----------+
+|2       |2024-02-29 23:38:38.000 -0800|2024-02-29 23:53:23.000 -0800|1              |2            |1         |N                 |24          |236         |1           |15         |0    |1      |3         |0           |1                    |22          |3                   |0          |
+|2       |2024-03-31 13:31:27.000 -0700|2024-03-31 13:40:29.000 -0700|NULL           |2            |NULL      |NULL              |211         |158         |0           |10         |0    |1      |0         |0           |1                    |14          |NULL                |NULL       |
++--------+-----------------------------+-----------------------------+---------------+-------------+----------+------------------+------------+------------+------------+-----------+-----+-------+----------+------------+---------------------+------------+--------------------+-----------+
+only showing top 2 rows
+
+validations ['count_check']
+****************************************
+count check validation started
+source count is 3582628, target count is 318, Count is not matching between source and target, diff is 3582310
+****************************************
+count check validation ended
+{'validation_Type': ['count_check'], 'source': ['master/yellowcabs/trip_data/202403'], 'target': ['yellow_taxi'], 'number_of_source_Records': [3582628], 'number_of_target_Records': [318], 'number_of_failed_Records': [3582310], 'column': ['id'], 'status': ['FAIL'], 'source_type': ['adls'], 'target_type': ['snowflake']}
+  validation_Type                              source  ... source_type  target_type
+0     count_check  master/yellowcabs/trip_data/202403  ...        adls    snowflake
+
+[1 rows x 10 columns]
++---------------+--------------------+-----------+------------------------+------------------------+------------------------+------+------+-----------+-----------+
+|validation_Type|              source|     target|number_of_source_Records|number_of_target_Records|number_of_failed_Records|column|status|source_type|target_type|
++---------------+--------------------+-----------+------------------------+------------------------+------------------------+------+------+-----------+-----------+
+|    count_check|master/yellowcabs...|yellow_taxi|                 3582628|                     318|                 3582310|    id|  FAIL|       adls|  snowflake|
++---------------+--------------------+-----------+------------------------+------------------------+------------------------+------+------+-----------+-----------+
+
++------------+---------------+--------------------+-----------+---------------------+--------------+--------------------------------+------------------+-----------+-----------+---------------------+--------------+------------------+--------------------------------+------------+-------------+---------------+---------------+-------------+---------+---------------+-------+-------+
+|test_case_id|validation_Type|              source|source_type|source_json_multiline|source_db_name|source_transformation_query_path|source_schema_path|     target|target_type|target_json_multiline|target_db_name|target_schema_path|target_transformation_query_path|key_col_list|null_col_list|unique_col_list|exclude_columns|execution_ind|dq_column|expected_values|min_val|max_val|
++------------+---------------+--------------------+-----------+---------------------+--------------+--------------------------------+------------------+-----------+-----------+---------------------+--------------+------------------+--------------------------------+------------+-------------+---------------+---------------+-------------+---------+---------------+-------+-------+
+|         FM9|    count_check|master/yellowcabs...|       adls|             NOT APPL|          adls|                        NOT APPL|          NOT APPL|yellow_taxi|  snowflake|             NOT APPL|  snowflake_db|          NOT APPL|                        NOT APPL|          id|          NaN|            NaN|            NaN|            Y|      NaN|            NaN|    NaN|    NaN|
++------------+---------------+--------------------+-----------+---------------------+--------------+--------------------------------+------------------+-----------+-----------+---------------------+--------------+------------------+--------------------------------+------------+-------------+---------------+---------------+-------------+---------+---------------+-------+-------+
+
++---------------+--------------------+-----------+------------------------+------------------------+------------------------+------+------+-----------+-----------+
+|validation_Type|              source|     target|number_of_source_Records|number_of_target_Records|number_of_failed_Records|column|status|source_type|target_type|
++---------------+--------------------+-----------+------------------------+------------------------+------------------------+------+------+-----------+-----------+
+|    count_check|master/yellowcabs...|yellow_taxi|                 3582628|                     318|                 3582310|    id|  FAIL|       adls|  snowflake|
++---------------+--------------------+-----------+------------------------+------------------------+------------------------+------+------+-----------+-----------+
+
++------------------------+------------------------+------------------------+------+------+--------------------+
+|number_of_source_Records|number_of_target_Records|number_of_failed_Records|column|status|            hash_key|
++------------------------+------------------------+------------------------+------+------+--------------------+
+|                 3582628|                     318|                 3582310|    id|  FAIL|d0adffedd1f5ce359...|
++------------------------+------------------------+------------------------+------+------+--------------------+
+
++--------------------+------------+---------------+--------------------+-----------+---------------------+--------------+--------------------------------+------------------+-----------+-----------+---------------------+--------------+------------------+--------------------------------+------------+-------------+---------------+---------------+-------------+---------+---------------+-------+-------+------------------------+------------------------+------------------------+------+------+--------------+-----------+-----------+
+|            hash_key|test_case_id|validation_Type|              source|source_type|source_json_multiline|source_db_name|source_transformation_query_path|source_schema_path|     target|target_type|target_json_multiline|target_db_name|target_schema_path|target_transformation_query_path|key_col_list|null_col_list|unique_col_list|exclude_columns|execution_ind|dq_column|expected_values|min_val|max_val|number_of_source_Records|number_of_target_Records|number_of_failed_Records|column|status|    batch_date|create_user|update_user|
++--------------------+------------+---------------+--------------------+-----------+---------------------+--------------+--------------------------------+------------------+-----------+-----------+---------------------+--------------+------------------+--------------------------------+------------+-------------+---------------+---------------+-------------+---------+---------------+-------+-------+------------------------+------------------------+------------------------+------+------+--------------+-----------+-----------+
+|d0adffedd1f5ce359...|         FM9|    count_check|master/yellowcabs...|       adls|             NOT APPL|          adls|                        NOT APPL|          NOT APPL|yellow_taxi|  snowflake|             NOT APPL|  snowflake_db|          NOT APPL|                        NOT APPL|          id|          NaN|            NaN|            NaN|            Y|      NaN|            NaN|    NaN|    NaN|                 3582628|                     318|                 3582310|    id|  FAIL|20241016104839|      admin|      admin|
++--------------------+------------+---------------+--------------------+-----------+---------------------+--------------+--------------------------------+------------------+-----------+-----------+---------------------+--------------+------------------+--------------------------------+------------+-------------+---------------+---------------+-------------+---------+---------------+-------+-------+------------------------+------------------------+------------------------+------+------+--------------+-----------+-----------+
+
