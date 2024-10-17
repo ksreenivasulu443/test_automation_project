@@ -42,7 +42,7 @@ adls_file_system_url = f"abfss://{adls_container_name}@{adls_account_name}.dfs.c
 
 # Path to ADLS directory where files are added monthly
 adls_qa_backup= f"{adls_file_system_url}master/customer/qa_backup/"
-adls_folder_path = f"{adls_file_system_url}master/customer/delta/20241016/"
+adls_folder_path = f"{adls_file_system_url}master/customer/delta/"
 
 
 existing_df = spark.read.parquet(adls_qa_backup)
