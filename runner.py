@@ -34,8 +34,8 @@ jar_path = snow_jar + ',' + postgres_jar + ','+azure_storage + ',' + hadoop_azur
 
 
 # Spark Session
-spark = SparkSession.builder.master("local[1]") \
-    .appName("test") \
+spark = SparkSession.builder.master("local[2]") \
+    .appName("runner") \
     .config("spark.jars", jar_path) \
     .config("spark.driver.extraClassPath", jar_path) \
     .config("spark.executor.extraClassPath", jar_path) \
@@ -111,7 +111,8 @@ for row in testcases:
                            path=row['source'],
                            file_type=row['source_type'],
                            schema_path=row['source_schema_path'],
-                           multiline=row['source_json_multiline'],row=row)
+                           multiline=row['source_json_multiline'],
+                           row=row)
 
     if row['target_type'] == 'snowflake':
         target = read_snowflake(spark=spark,
@@ -208,8 +209,8 @@ final_result= final_result.withColumn('batch_date', lit(batch_id))\
 final_result.show()
 
 url = "jdbc:snowflake://atjmorn-ht38363.snowflakecomputing.com/?user=KSREENIVASULU443&password=Dharmavaram1@&warehouse=COMPUTE_WH&db=SAMPLEDB&schema=CONTACT_INFO"
-
-
+#
+#
 final_result.write.mode("overwrite") \
     .format("jdbc") \
     .option("driver", "net.snowflake.client.jdbc.SnowflakeDriver") \

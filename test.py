@@ -14,23 +14,8 @@ spark = SparkSession.builder \
     .appName("SimpleDataFrameExample") \
     .getOrCreate()
 
-# Sample data
-data = [
-    ("Alice", 30),
-    ("Bob", 25),
-    ("Cathy", 28),
-    ("David", 35)
-]
+df= spark.read.parquet("/Users/admin/PycharmProjects/test_automation_project/files/userdata1.parquet")
 
-# Define the schema
-columns = ["Name", "Age"]
+df = df.filter('id<990')
 
-# Create a DataFrame
-df = spark.createDataFrame(data, schema=columns)
-
-# Show the DataFrame
-df.show()
-
-# Stop the Spark session
-spark.stop()
-
+df.write.mode('ignore').parquet("/Users/admin/PycharmProjects/test_automation_project/files/transformed")

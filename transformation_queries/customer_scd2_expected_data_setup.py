@@ -49,6 +49,17 @@ adls_folder_path = f"{adls_file_system_url}master/customer/full_load/"
 df = spark.read.csv(adls_folder_path, header=True,inferSchema=True)
 
 
+existing_data = read from backup
+
+incoming_data = new batch data
+
+present_in_existing = (incoming_data.join(existing_data,'id','left_semi').WithColumn("start_date", concat(current_date(), lit("T00:00:00.0000Z")).cast("string")).
+                  withColumn("end_date", lit("9999-12-31T23:59:59.999Z").cast("string")).
+                  withColumn("history_flag", lit(False)))
+
+update_existing_record = (existing_data.join(incoming_data,'id', 'left_semi'). withColumn("end_date", concat(current_date(), lit("T23:59:59.0000Z")-1).cast("string")).
+                  withColumn("history_flag", lit(True)))
+
 
 final_df = (df.withColumn("start_date", concat(current_date(), lit("T00:00:00.0000Z")).cast("string")).
                   withColumn("end_date", lit("9999-12-31T23:59:59.999Z").cast("string")).

@@ -109,3 +109,5 @@ def read_db(spark, table, database, query_path,row):
 
     exclude_cols = row['exclude_columns'].split(',')
     return df.drop(*exclude_cols)
+
+
